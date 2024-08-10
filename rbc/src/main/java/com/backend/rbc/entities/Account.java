@@ -5,35 +5,42 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Data
-@Table(name = "account")
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
+@Table(name = "account")
 public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "name")
-    @NotNull(message = "Name cannot be null")
     private String name;
 
     @Column(name = "currency")
-    @NotNull(message = "Currency cannot be null")
     private String currency;
 
     @Column(name = "balance")
-    @NotNull(message = "Balance cannot be null")
-    private double balance;
+    private float balance;
 
     @OneToMany(mappedBy = "accountId", cascade = CascadeType.ALL, orphanRemoval = true)
-    Set<Transaction> transactions;
+    List<Transaction> transactions;
+
+    public Account(Long id, String name, String currency, float balance, List<Transaction> transactions) {
+        this.id = id;
+        this.name = name;
+        this.currency = currency;
+        this.balance = balance;
+        this.transactions = this.getTransactions();
+    }
 
     //private List<Transaction> transactions;
 }
