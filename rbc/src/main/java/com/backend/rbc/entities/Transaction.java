@@ -30,7 +30,7 @@ public class Transaction {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
-    private Account accountId;
+    private Long accountId; // bilo Account
 
     @Column(name = "amount")
     private Float amount;
