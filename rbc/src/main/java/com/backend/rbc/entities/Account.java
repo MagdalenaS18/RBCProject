@@ -1,5 +1,6 @@
 package com.backend.rbc.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
-//@AllArgsConstructor
+@AllArgsConstructor
 @Table(name = "account")
 public class Account {
 
@@ -31,16 +32,17 @@ public class Account {
     @Column(name = "balance")
     private float balance;
 
-    @OneToMany(mappedBy = "accountId", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Transaction> transactions;
+    @JsonIgnore
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Transaction> transactions;
 
-    public Account(Long id, String name, String currency, float balance, List<Transaction> transactions) {
-        this.id = id;
-        this.name = name;
-        this.currency = currency;
-        this.balance = balance;
-        this.transactions = this.getTransactions();
-    }
+//    public Account(Long id, String name, String currency, float balance, List<Transaction> transactions) {
+//        this.id = id;
+//        this.name = name;
+//        this.currency = currency;
+//        this.balance = balance;
+//        this.transactions = this.getTransactions();
+//    }
 
     //private List<Transaction> transactions;
 }

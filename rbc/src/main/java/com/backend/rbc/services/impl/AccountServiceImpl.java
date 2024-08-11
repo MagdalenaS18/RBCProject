@@ -13,15 +13,13 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hibernate.internal.util.collections.ArrayHelper.forEach;
-
 @Service
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepository accountRepository;
-//    @Autowired
+
     private AccountMapper accountMapper;
 
     @Override
@@ -35,7 +33,6 @@ public class AccountServiceImpl implements AccountService {
         return accountDtoList;
     }
 
-    // ici ce u Transaction
     @Override
     public AccountDto getAccountById(Long id) {
         Account account = accountRepository
@@ -45,7 +42,6 @@ public class AccountServiceImpl implements AccountService {
         return accountMapper.mapToDTO(account);
     }
 
-    // probati konstruktor ako ne bude radilo
     @Override
     public AccountDto createAccount(AccountDto accountDto) {
         // need to convert accountDto to account (it needs to be JPA entity) to save in the database
@@ -57,9 +53,34 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean deleteAllData() {
-        return false;
+    public AccountDto updateAccount(AccountDto accountDto) {
+        Account account = accountRepository.findById(accountDto.getId())
+                .orElseThrow(() -> new RuntimeException("Account doesn't exist!"));
+
+        account.setName(accountDto.getName());
+        account.setCurrency(accountDto.getCurrency());
+        account.setBalance(accountDto.getBalance());
+        account.setTransactions(account.getTransactions());
+
+        AccountDto newAccountDto = accountMapper.mapToDTO(account);
+
+        return newAccountDto;
     }
 
+    @Override
+    public void deleteAccount(Long id) {
+        Account account = accountRepository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("Account doesn't exist"));
+        accountRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAllAccounts() {
+        if(accountRepository.findAll().isEmpty()){
+            new RuntimeException("There's no account to delete!");
+        }
+        accountRepository.deleteAll();
+    }
 
 }

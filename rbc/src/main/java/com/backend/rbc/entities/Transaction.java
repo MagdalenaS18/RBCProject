@@ -12,9 +12,9 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "transaction")
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "transaction")
 public class Transaction {
 
     @Id
@@ -29,8 +29,8 @@ public class Transaction {
     private Type type;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_id")
-    private Long accountId; // bilo Account
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
 
     @Column(name = "amount")
     private Float amount;

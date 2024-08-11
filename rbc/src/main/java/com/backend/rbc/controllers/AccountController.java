@@ -11,24 +11,38 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RequiredArgsConstructor
-@RestController
 @AllArgsConstructor
+@RestController
+@RequestMapping("/api/accounts")
 public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @GetMapping("/api/accounts")
+    @GetMapping
     public ResponseEntity<List<AccountDto>> getAllAccounts(){
         return ResponseEntity.ok(accountService.getAccounts());
     }
 
-    @GetMapping("/api/accounts/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<AccountDto> getAccountById(@PathVariable Long id){
         return ResponseEntity.ok(accountService.getAccountById(id));
     }
 
-    @PostMapping("/api/accounts")
+    @PostMapping
     public ResponseEntity<AccountDto> createAccount(@RequestBody AccountDto accountDto){
         return new ResponseEntity<>(accountService.createAccount(accountDto), HttpStatus.CREATED);
     }
+
+    @PatchMapping
+    public ResponseEntity updateAccount(@RequestBody AccountDto accountDto){
+        accountService.updateAccount(accountDto);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteAccount(@PathVariable Long id){
+        accountService.deleteAccount(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

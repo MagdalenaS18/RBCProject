@@ -1,5 +1,6 @@
 package com.backend.rbc.services.impl;
 
+import com.backend.rbc.dtos.AccountDto;
 import com.backend.rbc.dtos.TransactionDto;
 import com.backend.rbc.entities.Account;
 import com.backend.rbc.entities.Transaction;
@@ -39,7 +40,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<TransactionDto> getTransactionsByAccountId(Long accountId) {
+    public List<TransactionDto> getTransactionsForAccount(Long accountId) {
         List<Transaction> transactionList = transactionRepository.findByAccountId(accountId);
         List<TransactionDto> transactionDtos = new ArrayList<>();
         for(Transaction transaction: transactionList){
@@ -52,11 +53,15 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     @Transactional
     public TransactionDto createTransaction(TransactionDto transactionDto) {
-//        Transaction transactions = transactionRepository.findByAccountId(transactionDto.getAccountId());
-
-        Transaction transaction = transactionMapper.mapToTransaction(transactionDto);
-        Account account = accountRepository.findById(transaction.getAccountId())
+        Long accountId = transactionDto.getAccount().getId();
+        Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new RuntimeException("Account not found"));
+
+        Transaction transaction = new Transaction(); // transactionMapper.mapToTransaction(transactionDto);
+        transaction.setDescription(transactionDto.getDescription());
+        transaction.setType(transactionDto.getType());
+        transaction.setAmount(transactionDto.getAmount());
+        transaction.setAccount(account);
 
         if(transaction.getType() == Type.EXPENSE){
             if(account.getBalance() < transaction.getAmount()) {
@@ -73,34 +78,35 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionMapper.mapToDTO(newTransaction);
     }
 
-//    @Autowired
-//    private TransactionRepository transactionRepository;
-//
-//    @Autowired
-//    private AccountRepository accountRepository;
-//
-//    public List<TransactionDto> getTransactionsByAccountId(Long accountId) {
-//        // Retrieve the account by ID
-//        Account account = accountRepository.findById(accountId)
-//                .orElseThrow(() -> new RuntimeException("Account not found with ID: " + accountId));
-//
-//        // Find transactions by account
-//        List<Transaction> transactions = transactionRepository.findByAccount(account);
-//
-//        // Convert Transaction entities to DTOs (assuming you have a method to convert entities to DTOs)
-//        return transactions.stream()
-//                .map(this::convertToDto) // Implement this method to map Transaction to TransactionDto
-//                .collect(Collectors.toList());
-//    }
-//
-//    private TransactionDto convertToDto(Transaction transaction) {
-//        // Convert the Transaction entity to a TransactionDto
-//        TransactionDto dto = new TransactionDto();
-//        dto.setId(transaction.getId());
-//        dto.setDescription(transaction.getDescription());
-//        dto.setType(transaction.getType());
-//        dto.setAmount(transaction.getAmount());
-//        // Add more fields as necessary
-//        return dto;
-//    }
+    @Override
+    public TransactionDto updateTransaction(TransactionDto transactionDto) {
+        Transaction transaction = transactionRepository.findById(transactionDto.getId())
+                .orElseThrow(() -> new RuntimeException("Transaction doesn't exist"));
+
+        transaction.setDescription(transactionDto.getDescription());
+        transaction.setType(transactionDto.getType());
+        transaction.setAccount(transactionDto.getAccount());
+        transaction.setAmount(transactionDto.getAmount());
+
+        TransactionDto newTransactionDto = transactionMapper.mapToDTO(transaction);
+
+        return newTransactionDto;
+    }
+
+    @Override
+    public void deleteTransaction(Long id) {
+        Transaction transaction = transactionRepository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("Transaction doesn't exist"));
+        transactionRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAllTransactions() {
+        if(transactionRepository.findAll().isEmpty()){
+            new RuntimeException("There's no transaction to delete");
+        }
+        transactionRepository.deleteAll();
+    }
+
 }

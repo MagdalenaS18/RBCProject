@@ -13,6 +13,6 @@ public class TransactionDto {
     private Long id;
     private String description;
     private Type type;
-    private Long accountId; // bilo Account
+    private Account account; // bilo Account
     private Float amount;
 }

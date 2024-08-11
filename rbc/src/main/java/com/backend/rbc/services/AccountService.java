@@ -8,5 +8,7 @@ public interface AccountService {
     List<AccountDto> getAccounts();
     AccountDto getAccountById(Long id);
     AccountDto createAccount(AccountDto accountDto);
-    boolean deleteAllData();
+    AccountDto updateAccount(AccountDto accountDto);
+    void deleteAccount(Long id);
+    void deleteAllAccounts();
 }

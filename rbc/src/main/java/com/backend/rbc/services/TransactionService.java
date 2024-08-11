@@ -1,5 +1,6 @@
 package com.backend.rbc.services;
 
+import com.backend.rbc.dtos.AccountDto;
 import com.backend.rbc.dtos.TransactionDto;
 import com.backend.rbc.entities.Account;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,10 @@ import java.util.List;
 public interface TransactionService {
     List<TransactionDto> getTransactions();
 //    List<TransactionDto> getTransactionsByAccountId(Long id);
-    List<TransactionDto> getTransactionsByAccountId(Long accountId);
+    List<TransactionDto> getTransactionsForAccount(Long accountId);
     TransactionDto createTransaction(TransactionDto transactionDto);
+    TransactionDto updateTransaction(TransactionDto transactionDto);
+    void deleteTransaction(Long id);
+    void deleteAllTransactions();
 
 }

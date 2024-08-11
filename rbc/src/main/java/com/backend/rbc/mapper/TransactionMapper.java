@@ -9,7 +9,7 @@ public class TransactionMapper {
                 transactionDto.getId(),
                 transactionDto.getDescription(),
                 transactionDto.getType(),
-                transactionDto.getAccountId(),
+                transactionDto.getAccount(),
                 transactionDto.getAmount()
         );
 
@@ -21,7 +21,7 @@ public class TransactionMapper {
                 transaction.getId(),
                 transaction.getDescription(),
                 transaction.getType(),
-                transaction.getAccountId(),
+                transaction.getAccount(),
                 transaction.getAmount()
         );
 
