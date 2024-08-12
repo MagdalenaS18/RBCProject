@@ -1,6 +1,5 @@
 package com.backend.rbc.services.impl;
 
-import com.backend.rbc.dtos.AccountDto;
 import com.backend.rbc.dtos.TransactionDto;
 import com.backend.rbc.entities.Account;
 import com.backend.rbc.entities.Transaction;
@@ -26,6 +25,8 @@ public class TransactionServiceImpl implements TransactionService {
     private TransactionRepository transactionRepository;
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private CurrencySettingsServiceImpl currencySettingsServiceImpl;
 
     private TransactionMapper transactionMapper;
 
@@ -61,14 +62,16 @@ public class TransactionServiceImpl implements TransactionService {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new AccountNotFoundException());
 
-        Transaction transaction = new Transaction(); // transactionMapper.mapToTransaction(transactionDto);
+        Transaction transaction = new Transaction();
+        if(transactionDto.getDescription().isBlank() || transactionDto.getType().toString().isBlank()){
+            new InvalidCredentialsException();
+        }
         transaction.setDescription(transactionDto.getDescription());
         transaction.setType(transactionDto.getType());
         if(transactionDto.getAmount() <= 0){
             new AmountCanNotBeNegativeException();
-        } else {
-            transaction.setAmount(transactionDto.getAmount());
         }
+        transaction.setAmount(transactionDto.getAmount());
         transaction.setAccount(account);
 
         if(transaction.getType() == Type.EXPENSE){
@@ -79,6 +82,9 @@ public class TransactionServiceImpl implements TransactionService {
         } else if (transaction.getType() == Type.PROFIT){
             account.setBalance(account.getBalance() + transaction.getAmount());
         }
+        float convertedAmount = currencySettingsServiceImpl.convertToDefaultCurrency(transactionDto.getAmount(), transactionDto.getCurrency());
+        transaction.setConvertedAmount(convertedAmount);
+        transaction.setCurrency(transactionDto.getCurrency());
 
         accountRepository.save(account);
         Transaction newTransaction = transactionRepository.save(transaction);
@@ -103,9 +109,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public void deleteTransaction(Long id) {
-        Transaction transaction = transactionRepository
-                .findById(id)
-                .orElseThrow(() -> new TransactionNotFoundException());
+        transactionRepository.findById(id).orElseThrow(() -> new TransactionNotFoundException());
         transactionRepository.deleteById(id);
     }
 

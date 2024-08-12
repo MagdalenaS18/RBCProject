@@ -15,4 +15,6 @@ public class TransactionDto {
     private Type type;
     private Account account; // bilo Account
     private Float amount;
+    private Float convertedAmount;
+    private String currency;
 }
