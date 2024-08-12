@@ -5,6 +5,7 @@ import com.backend.rbc.dtos.TransactionDto;
 import com.backend.rbc.entities.Account;
 import com.backend.rbc.entities.Transaction;
 import com.backend.rbc.enums.Type;
+import com.backend.rbc.exceptions.*;
 import com.backend.rbc.mapper.TransactionMapper;
 import com.backend.rbc.repository.AccountRepository;
 import com.backend.rbc.repository.TransactionRepository;
@@ -41,6 +42,9 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<TransactionDto> getTransactionsForAccount(Long accountId) {
+        accountRepository.findById(accountId)
+                .orElseThrow(() -> new AccountNotFoundException());
+
         List<Transaction> transactionList = transactionRepository.findByAccountId(accountId);
         List<TransactionDto> transactionDtos = new ArrayList<>();
         for(Transaction transaction: transactionList){
@@ -55,17 +59,21 @@ public class TransactionServiceImpl implements TransactionService {
     public TransactionDto createTransaction(TransactionDto transactionDto) {
         Long accountId = transactionDto.getAccount().getId();
         Account account = accountRepository.findById(accountId)
-                .orElseThrow(() -> new RuntimeException("Account not found"));
+                .orElseThrow(() -> new AccountNotFoundException());
 
         Transaction transaction = new Transaction(); // transactionMapper.mapToTransaction(transactionDto);
         transaction.setDescription(transactionDto.getDescription());
         transaction.setType(transactionDto.getType());
-        transaction.setAmount(transactionDto.getAmount());
+        if(transactionDto.getAmount() <= 0){
+            new AmountCanNotBeNegativeException();
+        } else {
+            transaction.setAmount(transactionDto.getAmount());
+        }
         transaction.setAccount(account);
 
         if(transaction.getType() == Type.EXPENSE){
             if(account.getBalance() < transaction.getAmount()) {
-                new RuntimeException("You don't have enough money to make this transaction!");
+                new NotEnoughMoneyException();
             }
             account.setBalance(account.getBalance() - transaction.getAmount());
         } else if (transaction.getType() == Type.PROFIT){
@@ -81,7 +89,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public TransactionDto updateTransaction(TransactionDto transactionDto) {
         Transaction transaction = transactionRepository.findById(transactionDto.getId())
-                .orElseThrow(() -> new RuntimeException("Transaction doesn't exist"));
+                .orElseThrow(() -> new TransactionNotFoundException());
 
         transaction.setDescription(transactionDto.getDescription());
         transaction.setType(transactionDto.getType());
@@ -97,14 +105,14 @@ public class TransactionServiceImpl implements TransactionService {
     public void deleteTransaction(Long id) {
         Transaction transaction = transactionRepository
                 .findById(id)
-                .orElseThrow(() -> new RuntimeException("Transaction doesn't exist"));
+                .orElseThrow(() -> new TransactionNotFoundException());
         transactionRepository.deleteById(id);
     }
 
     @Override
     public void deleteAllTransactions() {
         if(transactionRepository.findAll().isEmpty()){
-            new RuntimeException("There's no transaction to delete");
+            new NoDataToDeleteException();
         }
         transactionRepository.deleteAll();
     }

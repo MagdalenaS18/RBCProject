@@ -20,6 +20,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 //    List<Transaction> findByAccount(@Param("accountsTransaction") Long accountsTransaction);
 
     List<Transaction> findByAccountId(Long accountId);
+//    boolean findAccountId(Long accountId);
 
 //    @Query("SELECT t.account_id FROM transaction t")
 //    Long findAccountId(@Param("accountId") Long accountId);

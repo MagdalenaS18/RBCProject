@@ -25,8 +25,14 @@ public class CurrencyServiceImpl implements CurrencyService {
         CurrencyResponseBean currencyResponseBeans = currencyResponseBean.getBody();
         currencyResponseBeans.getDate();
         currencyResponseBeans.getCurrency();
+//        currencyResponseBeans.getCurrencyAed();
+//        currencyResponseBeans.getCurrencyUsd();
+//        currencyResponseBeans.getCurrencyRsd();
 
         CurrencyDetailsBean currencyNames = currencyResponseBeans.getCurrency();
+//        CurrencyDetailsBean currencyNamesa = currencyResponseBeans.getCurrencyAed();
+//        CurrencyDetailsBean currencyNamesu = currencyResponseBeans.getCurrencyUsd();
+//        CurrencyDetailsBean currencyNamesr = currencyResponseBeans.getCurrencyRsd();
         System.out.println("aed: " + currencyNames.getAedCurrency()+ "\n bam: " + currencyNames.getBamCurrency()+ "\n cad: " +
                 currencyNames.getCadCurrency()+ "\n chf: " +currencyNames.getChfCurrency()+ "\n rsd: " +currencyNames.getRsdCurrency()+
                 "\n rub: " + currencyNames.getRubCurrency() + "\n eur: " +currencyNames.getEurCurrency() +"\n usd: "+

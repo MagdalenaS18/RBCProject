@@ -2,6 +2,8 @@ package com.backend.rbc.services.impl;
 
 import com.backend.rbc.dtos.AccountDto;
 import com.backend.rbc.entities.Account;
+import com.backend.rbc.exceptions.AccountNotFoundException;
+import com.backend.rbc.exceptions.NoDataToDeleteException;
 import com.backend.rbc.mapper.AccountMapper;
 import com.backend.rbc.repository.AccountRepository;
 import com.backend.rbc.services.AccountService;
@@ -37,7 +39,7 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto getAccountById(Long id) {
         Account account = accountRepository
                 .findById(id)
-                .orElseThrow(() -> new RuntimeException("Account doesn't exist"));
+                .orElseThrow(() -> new AccountNotFoundException());
 
         return accountMapper.mapToDTO(account);
     }
@@ -55,7 +57,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDto updateAccount(AccountDto accountDto) {
         Account account = accountRepository.findById(accountDto.getId())
-                .orElseThrow(() -> new RuntimeException("Account doesn't exist!"));
+                .orElseThrow(() -> new AccountNotFoundException());
 
         account.setName(accountDto.getName());
         account.setCurrency(accountDto.getCurrency());
@@ -71,15 +73,16 @@ public class AccountServiceImpl implements AccountService {
     public void deleteAccount(Long id) {
         Account account = accountRepository
                 .findById(id)
-                .orElseThrow(() -> new RuntimeException("Account doesn't exist"));
+                .orElseThrow(() -> new AccountNotFoundException());
         accountRepository.deleteById(id);
     }
 
     @Override
     public void deleteAllAccounts() {
         if(accountRepository.findAll().isEmpty()){
-            new RuntimeException("There's no account to delete!");
+            new NoDataToDeleteException();
         }
+        // dodati EXC za nema vise account-a za brisati
         accountRepository.deleteAll();
     }
 
