@@ -1,0 +1,14 @@
+.account-full-width {
+    width: 100%;
+}
+
+.account-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+}
+    
+.account-form .mat-mdc-button-base {
+    margin: 8px 8px 8px 0;
+}
+    

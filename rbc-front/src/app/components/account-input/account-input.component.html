@@ -1,0 +1,18 @@
+<form #addAccountForm="ngForm" class="account-form" (ngSubmit)="addAccountSubmit()">
+  <mat-form-field class="account-full-width">
+    <mat-label>Name</mat-label>
+    <input name="name" ngModel matInput />
+  </mat-form-field>
+
+  <mat-form-field class="account-full-width">
+      <mat-label>Currency</mat-label>
+      <input name="currency" ngModel matInput />
+    </mat-form-field>
+
+  <mat-form-field class="account-full-width">
+    <mat-label>Balance</mat-label>
+    <input name="balance" ngModel matInput />
+  </mat-form-field>
+
+  <button type="submit" mat-raised-button>Add New Account</button>
+</form>

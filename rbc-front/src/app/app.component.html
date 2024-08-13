@@ -1,0 +1,11 @@
+<div class="main">
+  <app-account-display *ngFor="let account of accounts"
+    [account]="account"/>
+    
+  <!-- <div class="add-button-row"> -->
+  <!-- <button mat-raised-button>Add New Account</button> -->
+    <!-- <a mat-raised-button href="https://www.google.com/" target="_blank">Link</a> -->
+  <!-- </div> -->
+
+  <app-account-input (newDataEvent)="appendNewAccount($event)"/>
+</div>
