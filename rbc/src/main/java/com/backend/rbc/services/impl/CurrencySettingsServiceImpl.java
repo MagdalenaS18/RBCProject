@@ -1,6 +1,7 @@
 package com.backend.rbc.services.impl;
 
 import com.backend.rbc.entities.Settings;
+import com.backend.rbc.exceptions.UnableToFetchCurrenciesException;
 import com.backend.rbc.output.CurrencyResponse;
 import com.backend.rbc.repository.CurrencySettingsRepository;
 import com.backend.rbc.services.CurrencySettingsService;
@@ -45,7 +46,7 @@ public class CurrencySettingsServiceImpl implements CurrencySettingsService {
             }
         }
 
-        throw new RuntimeException("Unable to fetch conversion rate");
+        throw new UnableToFetchCurrenciesException();
     }
 
     public String getDefaultCurrency() {

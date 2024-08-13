@@ -70,11 +70,13 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void deleteAccount(Long id) {
+    public AccountDto deleteAccount(Long id) {
         Account account = accountRepository
                 .findById(id)
                 .orElseThrow(() -> new AccountNotFoundException());
         accountRepository.deleteById(id);
+
+        return accountMapper.mapToDTO(account);
     }
 
     @Override

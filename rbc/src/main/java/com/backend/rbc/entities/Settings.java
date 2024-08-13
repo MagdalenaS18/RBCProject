@@ -14,6 +14,6 @@ import org.springframework.stereotype.Component;
 public class Settings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id = 1L;
+    private Long id;
     private String defaultCurrency = "eur";
 }

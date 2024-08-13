@@ -47,7 +47,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidCredentialsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorResponse handleInvalidCredentialsExceptions(InvalidCredentialsException exception){
+    public ErrorResponse handleInvalidCredentialsException(InvalidCredentialsException exception){
+        return new ErrorResponse(exception.getMessage());
+    }
+
+    @ExceptionHandler(UnableToFetchCurrenciesException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ErrorResponse handleUnableToFetchCurrenciesException(UnableToFetchCurrenciesException exception){
+        return new ErrorResponse(exception.getMessage());
+    }
+
+    @ExceptionHandler(DefaultCurrencyNotSetException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ErrorResponse handleDefaultCurrencyNotSetException(DefaultCurrencyNotSetException exception){
         return new ErrorResponse(exception.getMessage());
     }
 

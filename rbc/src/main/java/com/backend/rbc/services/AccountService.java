@@ -9,6 +9,6 @@ public interface AccountService {
     AccountDto getAccountById(Long id);
     AccountDto createAccount(AccountDto accountDto);
     AccountDto updateAccount(AccountDto accountDto);
-    void deleteAccount(Long id);
+    AccountDto deleteAccount(Long id);
     void deleteAllAccounts();
 }
