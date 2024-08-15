@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Account } from './models/account';
 import { AccountService } from './services/account.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,18 @@ import { AccountService } from './services/account.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  // accounts: Account[] = [];
+  title='MyBudget';
+
+  constructor(private router: Router){
+    // this.router.navigate(['/api/accounts']);
+  }
+  
+  // navigateTo(route: string): void {
+  //   this.router.navigate(['/${route}']);
+  // }
+}
+
+// accounts: Account[] = [];
 
   // // constructor(private http: HttpClient){}
 
@@ -32,7 +44,3 @@ export class AppComponent {
   // appendNewAccount(newAccount: any): void{
   //   this.accounts.push(newAccount);
   // }
-
-  title='MyBudget';
-  
-}

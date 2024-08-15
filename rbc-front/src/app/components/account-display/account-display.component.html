@@ -5,15 +5,16 @@
 </h2>
 <mat-card>
   <mat-card-header *ngFor="let account of accounts">
-      <mat-card-title>
+      <mat-card-title style="width: 100%;">
         {{ account.name }}   {{ account.balance }} {{ account.currency }}
       </mat-card-title>
-    <mat-card-subtitle align="end">
+    <mat-card-subtitle style="width: 100%;" align="end">
       {{ account.balance }}
     </mat-card-subtitle>
     <mat-divider></mat-divider>
   </mat-card-header>
 </mat-card>
+<br/>
 
 <button mat-raised-button 
         style=

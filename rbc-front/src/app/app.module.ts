@@ -16,6 +16,11 @@ import { AccountService } from './services/account.service';
 import { MatCardModule } from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { TransactionDisplayComponent } from './components/transaction-display/transaction-display.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -25,15 +30,22 @@ import {MatDialogModule} from '@angular/material/dialog';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    RouterOutlet,
+    RouterLink,
+    CommonModule,
     HttpClientModule,
     AccountDisplayComponent,
     AccountInputComponent,
+    TransactionDisplayComponent,
+    SettingsComponent,
+    NavbarComponent,
     MatCardModule,
     MatDividerModule,
     MatButtonModule,
     MatIconModule,
-    MatDialogModule
-  ],
+    MatDialogModule,
+    MatToolbarModule
+],
   providers: [AccountService],
   bootstrap: [AppComponent]
 })

@@ -42,7 +42,7 @@ export class AccountInputComponent implements OnInit {
 
   onSubmit(): void {
     if(this.addAccountForm.valid){
-      this.newDataEvent.emit(this.addAccountForm.value);
+      this.newDataEvent.emit(this.addAccountForm.value);  // account se kreira samo kad se klikne Create, a ne i kad kliknem Cancel
       this.dialogRef.close(this.addAccountForm.value);
 
       // this.accountService.addAccount(this.addAccountForm.value).subscribe(data => {
