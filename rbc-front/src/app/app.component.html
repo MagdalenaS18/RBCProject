@@ -1,11 +1,15 @@
 <div class="main">
-  <app-account-display *ngFor="let account of accounts"
-    [account]="account"/>
+  <h1 style="color: rgb(74, 123, 79); font-weight: bolder;">{{ title }}</h1>
+  <br/>
+  <app-account-display></app-account-display>
+  <!-- <app-account-input></app-account-input> -->
+  <!-- <app-account-display *ngFor="let account of accounts"
+    [account]="account"/> -->
     
   <!-- <div class="add-button-row"> -->
-  <!-- <button mat-raised-button>Add New Account</button> -->
+    <!-- <button mat-raised-button>Add New Account</button> -->
     <!-- <a mat-raised-button href="https://www.google.com/" target="_blank">Link</a> -->
   <!-- </div> -->
 
-  <app-account-input (newDataEvent)="appendNewAccount($event)"/>
+  <!-- <app-account-input (newDataEvent)="appendNewAccount($event)"/> -->
 </div>

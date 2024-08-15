@@ -1,0 +1,39 @@
+/* .mat-card {
+    margin: 15px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(247, 170, 70, 0.1);
+    background-color: #ffb349;
+    width: 300px;
+}
+  
+.mat-card-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.mat-card-header .account-name {
+    width: 100%;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+}
+
+.mat-card-header .currency-balance {
+    width: 100%;
+    font-size: 1.2em;
+    color: #555;
+    text-align: right;
+}
+
+.mat-card-footer {
+    width: 100%;
+    margin-top: 20px;
+    font-size: 1em;
+    color: #888;
+    text-align: center;
+} */

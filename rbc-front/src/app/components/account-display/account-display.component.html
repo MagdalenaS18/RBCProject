@@ -1,8 +1,33 @@
-<div>
-  <mat-card appearance="outlined">
-    <mat-card-header>
-      <mat-card-title>{{ account.name }}  {{ account.balance }} {{ account.currency }}</mat-card-title>
-      <mat-card-subtitle align="end">{{ account.balance }}</mat-card-subtitle>
-    </mat-card-header>
-  </mat-card>
-</div>
+<h2 style=
+      "color: rgb(74, 123, 79); 
+      font-weight: bold;">
+      Accounts
+</h2>
+<mat-card>
+  <mat-card-header *ngFor="let account of accounts">
+      <mat-card-title>
+        {{ account.name }}   {{ account.balance }} {{ account.currency }}
+      </mat-card-title>
+    <mat-card-subtitle align="end">
+      {{ account.balance }}
+    </mat-card-subtitle>
+    <mat-divider></mat-divider>
+  </mat-card-header>
+</mat-card>
+
+<button mat-raised-button 
+        style=
+          "background-color: #eafa93; 
+          color: rgb(74, 123, 79);"
+        (click)="openAddAccountDialog()">
+          Add a New Account
+</button>
+
+
+
+<!-- <h2>Accounts</h2>
+<ul>
+  <li *ngFor="let account of accounts">
+    {{ account.name }} - Balance: {{ account.balance }} ({{ account.currency }})
+  </li>
+</ul> -->

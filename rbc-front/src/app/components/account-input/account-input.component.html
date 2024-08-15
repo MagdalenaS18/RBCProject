@@ -1,4 +1,4 @@
-<form #addAccountForm="ngForm" class="account-form" (ngSubmit)="addAccountSubmit()">
+<!-- <form #addAccountForm="ngForm" class="account-form" (ngSubmit)="addAccountSubmit()">
   <mat-form-field class="account-full-width">
     <mat-label>Name</mat-label>
     <input name="name" ngModel matInput />
@@ -15,4 +15,37 @@
   </mat-form-field>
 
   <button type="submit" mat-raised-button>Add New Account</button>
+</form> -->
+
+<form #addAccountForm="ngForm" class="account-form" (ngSubmit)="onSubmit()">
+  <h1 mat-dialog-title>New Account</h1>
+  <div>
+    <div mat-dialog-content class="account-form">
+      <mat-form-field class="account-full-width">
+        <mat-label>Name</mat-label>
+        <input matInput name="name" ngModel required>
+      </mat-form-field>
+
+      <mat-form-field class="account-full-width">
+        <mat-label>Currency</mat-label>
+        <input matInput name="currency" ngModel required>
+      </mat-form-field>
+
+      <mat-form-field class="account-full-width">
+        <mat-label>Balance</mat-label>
+        <input matInput type="number" name="balance" ngModel required>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="form-buttons">
+      <button mat-raised-button
+              type="button"
+              (click)="onCancel()"
+              style="background-color: rgb(197, 68, 68); color: whitesmoke;">
+              Cancel
+      </button>
+      <button mat-raised-button
+              type="submit"
+              style="background-color: rgb(115, 198, 124);  color: whitesmoke;">Create Account</button>
+    </div>
+  </div>
 </form>

@@ -4,11 +4,18 @@
 
 .account-form {
     min-width: 150px;
-    max-width: 500px;
-    width: 100%;
+    max-width: 100%;
+    width: 95%;
+    margin: auto;
 }
     
-.account-form .mat-mdc-button-base {
+/* .account-form .mat-mdc-button-base {
     margin: 8px 8px 8px 0;
+} */
+
+.form-buttons {
+    justify-content: right;
+    margin-right: 5%;
+    margin-bottom: 5%;
 }
     

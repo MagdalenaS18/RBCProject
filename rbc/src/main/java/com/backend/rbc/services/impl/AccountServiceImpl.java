@@ -3,6 +3,8 @@ package com.backend.rbc.services.impl;
 import com.backend.rbc.dtos.AccountDto;
 import com.backend.rbc.entities.Account;
 import com.backend.rbc.exceptions.AccountNotFoundException;
+import com.backend.rbc.exceptions.AmountCanNotBeNegativeException;
+import com.backend.rbc.exceptions.InvalidCredentialsException;
 import com.backend.rbc.exceptions.NoDataToDeleteException;
 import com.backend.rbc.mapper.AccountMapper;
 import com.backend.rbc.repository.AccountRepository;
@@ -48,10 +50,28 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto createAccount(AccountDto accountDto) {
         // need to convert accountDto to account (it needs to be JPA entity) to save in the database
         // then I also need to convert account to accountDto to send it again to the client
-        Account account = accountMapper.mapToAccount(accountDto);
-        Account savedAccount = accountRepository.save(account);
+//        Account account = accountMapper.mapToAccount(accountDto);
+//        Account savedAccount = accountRepository.save(account);
 
-        return accountMapper.mapToDTO(savedAccount);
+        Account account = new Account();
+        if(accountDto.getName().isBlank() || accountDto.getCurrency().isBlank()){
+            throw new InvalidCredentialsException();
+        }
+        else{
+            account.setName(accountDto.getName());
+            account.setCurrency(accountDto.getCurrency());
+        }
+
+        if(accountDto.getBalance() < 1){
+            throw new AmountCanNotBeNegativeException();
+        }
+        else {
+            account.setBalance(accountDto.getBalance());
+        }
+
+        Account newAccount = accountRepository.save(account);
+
+        return accountMapper.mapToDTO(newAccount);
     }
 
     @Override
@@ -82,7 +102,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void deleteAllAccounts() {
         if(accountRepository.findAll().isEmpty()){
-            new NoDataToDeleteException();
+            throw new NoDataToDeleteException();
         }
         // dodati EXC za nema vise account-a za brisati
         accountRepository.deleteAll();

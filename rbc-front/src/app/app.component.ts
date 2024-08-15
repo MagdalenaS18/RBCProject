@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Account } from './models/account';
+import { AccountService } from './services/account.service';
 
 @Component({
   selector: 'app-root',
@@ -8,17 +9,30 @@ import { Account } from './models/account';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  accounts: Account[] = [];
+  // accounts: Account[] = [];
 
-  constructor(private http: HttpClient){}
+  // // constructor(private http: HttpClient){}
 
-  ngOnInit(): void{
-    this.http.get<Account[]>(
-      "http://localhost:8080/api/accounts"
-    ).subscribe(data => this.accounts = data);  // response cuvam u accounts field
-  }
+  // constructor(private accountService: AccountService){
+  //   this.loadAccounts();
+  // }
 
-  appendNewAccount(newAccount: any): void{
-    this.accounts.push(newAccount);
-  }
+  // loadAccounts(){
+  //   this.accountService.getAccounts().subscribe((data:Account[]) => {
+  //     this.accounts = data;
+  //   })
+  // }
+
+  // ngOnInit(): void{
+  //   // this.http.get<Account[]>(
+  //   //   "http://localhost:8080/api/accounts"
+  //   // ).subscribe(data => this.accounts = data);  // response cuvam u accounts field
+  // }
+
+  // appendNewAccount(newAccount: any): void{
+  //   this.accounts.push(newAccount);
+  // }
+
+  title='MyBudget';
+  
 }

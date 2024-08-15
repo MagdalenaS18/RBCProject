@@ -64,19 +64,19 @@ public class TransactionServiceImpl implements TransactionService {
 
         Transaction transaction = new Transaction();
         if(transactionDto.getDescription().isBlank() || transactionDto.getType().toString().isBlank()){
-            new InvalidCredentialsException();
+            throw new InvalidCredentialsException();
         }
         transaction.setDescription(transactionDto.getDescription());
         transaction.setType(transactionDto.getType());
         if(transactionDto.getAmount() <= 0){
-            new AmountCanNotBeNegativeException();
+            throw new AmountCanNotBeNegativeException();
         }
         transaction.setAmount(transactionDto.getAmount());
         transaction.setAccount(account);
 
         if(transaction.getType() == Type.EXPENSE){
             if(account.getBalance() < transaction.getAmount()) {
-                new NotEnoughMoneyException();
+                throw new NotEnoughMoneyException();
             }
             account.setBalance(account.getBalance() - transaction.getAmount());
         } else if (transaction.getType() == Type.PROFIT){
@@ -116,7 +116,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public void deleteAllTransactions() {
         if(transactionRepository.findAll().isEmpty()){
-            new NoDataToDeleteException();
+            throw new NoDataToDeleteException();
         }
         transactionRepository.deleteAll();
     }
