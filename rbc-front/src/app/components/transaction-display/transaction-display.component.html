@@ -1,3 +1,27 @@
-<p>
-  transaction-display works!
-</p>
+<div class="main">
+  <h2 style=
+        "color: rgb(74, 123, 79);
+        font-weight: bold;">
+        Transactions
+  </h2>
+  <mat-card>
+    <mat-card-header *ngFor="let transaction of transactions">
+      <mat-card-title>
+        {{ transaction.description }}
+        <!-- <span [ngClass]="{'transaction-type': transaction.type === 'EXPENSE'}" OVO JE DA OBOJI KLASU > {{ transaction.amount | currency: transaction.account.currency }} -->
+          {{ transaction.type === 'EXPENSE' ? '-' : '' }}{{ transaction.amount }} {{ transaction.currency }}
+        <!-- </span>  -->
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{ transaction.account.name }} {{ transaction.convertedAmount }} {{ transaction.currency }} <!-- ovdje treba od settings currency -->
+      </mat-card-subtitle>
+      <mat-divider></mat-divider>
+    </mat-card-header>
+  </mat-card>
+</div>
+
+<!-- <select>
+
+</select> -->
+
+<app-footer></app-footer>

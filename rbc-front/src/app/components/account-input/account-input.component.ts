@@ -15,19 +15,17 @@ import { AccountService } from '../../services/account.service';
   templateUrl: './account-input.component.html',
   styleUrls: ['./account-input.component.css'],
   standalone: true,
-  imports: [MatInputModule, 
-            MatFormFieldModule, 
-            FormsModule, 
-            MatIconModule, 
-            MatButtonModule, 
-            MatDialogModule]
+  imports: [MatInputModule, MatFormFieldModule, 
+            FormsModule, MatIconModule, 
+            MatButtonModule, MatDialogModule
+  ]
 })
 export class AccountInputComponent implements OnInit {
   // newAccount!: Account;
   @ViewChild("addAccountForm") addAccountForm!: NgForm; // ovdje smjestimo sve podatke sto dobijemo preko forme
 
   @Output() newDataEvent = new EventEmitter();  // kad se kreira novi account da se prikaze na main strani
-
+  // takodje da obavijesti roditelja komponente
   constructor(private dialogRef: MatDialogRef<AccountInputComponent>) { }
 
   ngOnInit() {

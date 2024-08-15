@@ -2,10 +2,6 @@ package com.backend.rbc.mapper;
 
 import com.backend.rbc.dtos.AccountDto;
 import com.backend.rbc.entities.Account;
-import com.backend.rbc.entities.Transaction;
-
-import java.util.HashSet;
-import java.util.List;
 
 public class AccountMapper {
     public static Account mapToAccount(AccountDto accountDto){
@@ -19,7 +15,7 @@ public class AccountMapper {
 
         return account;
     }
-
+    
     public static AccountDto mapToDTO(Account account){
         AccountDto accountDto = new AccountDto(
                 account.getId(),

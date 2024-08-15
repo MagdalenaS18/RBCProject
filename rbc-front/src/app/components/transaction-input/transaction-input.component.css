@@ -1,0 +1,17 @@
+.transaction-full-width {
+    width: 100%;
+}
+
+.transaction-form {
+    min-width: 150px;
+    max-width: 100%;
+    width: 95%;
+    margin: auto;
+}
+
+.form-buttons {
+    justify-content: right;
+    margin-right: 5%;
+    margin-bottom: 5%;
+}
+    

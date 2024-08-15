@@ -1,30 +1,32 @@
-<h2 style=
-      "color: rgb(74, 123, 79); 
-      font-weight: bold;">
-      Accounts
-</h2>
-<mat-card>
-  <mat-card-header *ngFor="let account of accounts">
-      <mat-card-title style="width: 100%;">
-        {{ account.name }}   {{ account.balance }} {{ account.currency }}
-      </mat-card-title>
-    <mat-card-subtitle style="width: 100%;" align="end">
-      {{ account.balance }}
-    </mat-card-subtitle>
-    <mat-divider></mat-divider>
-  </mat-card-header>
-</mat-card>
-<br/>
+<div class="main">
+  <h2 style=
+        "color: rgb(74, 123, 79); 
+        font-weight: bold;">
+        Accounts
+  </h2>
+  <mat-card>
+    <mat-card-header *ngFor="let account of accounts">
+        <mat-card-title style="width: 100%;">
+          {{ account.name }}   {{ account.balance }} {{ account.currency }}
+        </mat-card-title>
+      <mat-card-subtitle style="width: 100%;" align="end">
+        {{ account.balance }}
+      </mat-card-subtitle>
+      <mat-divider></mat-divider>
+    </mat-card-header>
+  </mat-card>
+  <br/>
 
-<button mat-raised-button 
-        style=
-          "background-color: #eafa93; 
-          color: rgb(74, 123, 79);"
-        (click)="openAddAccountDialog()">
-          Add a New Account
-</button>
+  <button mat-raised-button 
+          style=
+            "background-color: #eafa93; 
+            color: rgb(74, 123, 79);"
+          (click)="openAddAccountDialog()">
+            Add a New Account
+  </button>
+</div>
 
-
+<app-footer></app-footer>
 
 <!-- <h2>Accounts</h2>
 <ul>

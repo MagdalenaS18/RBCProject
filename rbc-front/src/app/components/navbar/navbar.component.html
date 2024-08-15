@@ -1,7 +1,7 @@
-<mat-toolbar>
+<mat-toolbar class="navbar-position">
   <span style="color: rgb(74, 123, 79); font-weight: bolder; font-size: larger;">MyBudget</span>
   <span class="nav-spacer"></span>
-  <a [routerLink]="'/api/accounts'" mat-button style="width: auto; height: 100%;">Accounts</a>
-  <a [routerLink]="'/api/transactions'" mat-button style="width: auto; height: 100%;">Transactions</a>
-  <a [routerLink]="'/api/settings'" mat-button style="width: auto; height: 100%;">Settings</a>
+  <a mat-button [routerLink]="'/api/accounts'" class="navbar-btn" style="color: rgb(74, 123, 79);">Accounts</a> 
+  <a mat-button [routerLink]="'/api/transactions'" class="navbar-btn" style="color: rgb(74, 123, 79);">Transactions</a>
+  <a mat-button [routerLink]="'/api/settings'" class="navbar-btn" style="color: rgb(74, 123, 79);">Settings</a>
 </mat-toolbar>

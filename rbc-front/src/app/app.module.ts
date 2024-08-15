@@ -21,6 +21,11 @@ import { TransactionDisplayComponent } from './components/transaction-display/tr
 import { SettingsComponent } from './components/settings/settings.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { TransactionService } from './services/transaction.service';
+import { TransactionInputComponent } from './components/transaction-input/transaction-input.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -37,16 +42,20 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     AccountDisplayComponent,
     AccountInputComponent,
     TransactionDisplayComponent,
+    TransactionInputComponent,
     SettingsComponent,
     NavbarComponent,
+    FooterComponent,
     MatCardModule,
     MatDividerModule,
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-    MatToolbarModule
+    MatToolbarModule,
+    // MatSelectModule,
+    // MatInputModule
 ],
-  providers: [AccountService],
+  providers: [AccountService, TransactionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

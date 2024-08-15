@@ -9,19 +9,25 @@ import { CommonModule } from '@angular/common';
 import {MatListModule} from '@angular/material/list';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AccountInputComponent } from '../account-input/account-input.component';
+import { FooterComponent } from '../footer/footer.component';
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-account-display',
   templateUrl: './account-display.component.html',
   styleUrls: ['./account-display.component.css'],
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatCardModule, MatDividerModule, MatIconModule, AccountInputComponent, MatDialogModule]
+  imports: [CommonModule, MatButtonModule,
+    MatCardModule, MatDividerModule,
+    MatIconModule, AccountInputComponent,
+    MatDialogModule, FooterComponent]
 })
 export class AccountDisplayComponent implements OnInit {
   accounts: Account[] = [];
   //@Input() account: Account = new Account(0, "", "", 0);
 
-  constructor(private accountService: AccountService, private dialog: MatDialog) { }
+  constructor(private accountService: AccountService, 
+              private dialog: MatDialog) { }
 
   ngOnInit(): void{
     // this.accountService.getAccounts().subscribe((data) => {

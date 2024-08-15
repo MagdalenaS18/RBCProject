@@ -8,7 +8,8 @@ import { RouterLink } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
   standalone: true,
-  imports: [MatToolbarModule, RouterLink, MatButtonModule]
+  imports: [MatToolbarModule, RouterLink, 
+            MatButtonModule]
 })
 export class NavbarComponent implements OnInit {
 
