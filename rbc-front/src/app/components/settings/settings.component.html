@@ -1,5 +1,13 @@
-<div class="main">
-  <p>
-    settings works!
-  </p>
+<div class="settings-container">
+  <p>Default Currency</p>
+  <form #addCurrencyForm="ngForm" class="settings-form" (ngSubmit)="onSubmit(addCurrencyForm)">
+    <mat-form-field>
+      <mat-label>Default Currency</mat-label>
+      <!-- <mat-label>{{ settings.defaultCurrency }}</mat-label> -->
+      <input matInput name="defaultCurrency" ngModel required>
+    </mat-form-field>
+    <button mat-raised-button type="submit">Save</button>
+  </form>
+  <mat-divider></mat-divider>
+  
 </div>

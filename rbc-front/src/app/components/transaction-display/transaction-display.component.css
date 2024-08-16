@@ -19,6 +19,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    /* height: auto; */
 }
 
 .transaction-header h2 {
@@ -65,6 +66,6 @@ mat-card-content {
 }
   
 .account-amount {
-    font-size: 14px;
+    font-size: 16px;
     color: grey;
 }

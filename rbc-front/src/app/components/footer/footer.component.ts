@@ -7,6 +7,8 @@ import { TransactionInputComponent } from '../transaction-input/transaction-inpu
 import { Transaction } from '../../models/transaction';
 import { AccountService } from '../../services/account.service';
 import { Account } from '../../models/account';
+import { CommonModule } from '@angular/common';
+import { SettingsService } from '../../services/settings.service';
 
 @Component({
   selector: 'app-footer',
@@ -14,18 +16,22 @@ import { Account } from '../../models/account';
   styleUrls: ['./footer.component.css'],
   standalone: true,
   imports: [MatToolbar, MatDialogModule, 
-            MatButtonModule, TransactionInputComponent]
+            MatButtonModule, TransactionInputComponent,
+            CommonModule]
 })
 export class FooterComponent implements OnInit {
   accounts: Account[] = [];
   transactions: Transaction[] = [];
+  availableAmount: number = 0;
 
 
   constructor(private accountService: AccountService,
               private transactionService: TransactionService,
+              private settingsService: SettingsService,
               private dialog: MatDialog) { }
 
   ngOnInit() {
+    // this.getAvailableAmount();
   }
 
   loadAccounts(): void {

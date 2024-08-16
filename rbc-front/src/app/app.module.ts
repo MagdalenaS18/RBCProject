@@ -26,6 +26,7 @@ import { TransactionInputComponent } from './components/transaction-input/transa
 import { FooterComponent } from './components/footer/footer.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { SettingsService } from './services/settings.service';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,7 @@ import { MatInputModule } from '@angular/material/input';
     // MatSelectModule,
     // MatInputModule
 ],
-  providers: [AccountService, TransactionService],
+  providers: [AccountService, TransactionService, SettingsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

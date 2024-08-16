@@ -6,4 +6,5 @@ public interface CurrencySettingsService {
     float convertToDefaultCurrency(float amount, String transactionCurrency);
     String getDefaultCurrency();
     Settings setDefaultCurrency(String currencyName);
+    Settings getSettingsInfo();
 }

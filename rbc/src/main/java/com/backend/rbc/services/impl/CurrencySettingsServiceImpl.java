@@ -21,6 +21,12 @@ public class CurrencySettingsServiceImpl implements CurrencySettingsService {
         this.settingsRepository = settingsRepository;
     }
 
+    @Override
+    public Settings getSettingsInfo() {
+        return settingsRepository.findAll().stream().findFirst().orElseThrow(() ->
+                new RuntimeException("Default currency not set in settings"));
+    }
+
     public float convertToDefaultCurrency(float amount, String transactionCurrency) {
         String defaultCurrency = getDefaultCurrency().toUpperCase();
 //        Settings settings = settingsRepository.findAll().stream().findFirst().orElseThrow(() ->
@@ -48,6 +54,7 @@ public class CurrencySettingsServiceImpl implements CurrencySettingsService {
 
         throw new UnableToFetchCurrenciesException();
     }
+    // da dobijem i datum
 
     public String getDefaultCurrency() {
         Settings settings = settingsRepository.findAll().stream().findFirst().orElseThrow(() ->
@@ -58,7 +65,11 @@ public class CurrencySettingsServiceImpl implements CurrencySettingsService {
     public Settings setDefaultCurrency(String currencyName){
         Settings settings = settingsRepository.findAll().stream().findFirst().orElseThrow(() ->
                 new RuntimeException("Default currency not set in settings"));
+//        settings.setId(settings.getId());
         settings.setDefaultCurrency(currencyName);
+        settingsRepository.save(settings);
         return settings;
     }
+
+
 }

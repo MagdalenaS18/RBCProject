@@ -15,12 +15,17 @@ public class SettingsController {
     @Autowired
     private CurrencySettingsServiceImpl currencySettingsServiceImpl;
 
+    @GetMapping()
+    public Settings getSettingsInfo(){
+        return currencySettingsServiceImpl.getSettingsInfo();
+    }
+
     @GetMapping("/default-currency")
     public String getDefaultCurrency() {
         return currencySettingsServiceImpl.getDefaultCurrency();
     }
 
-    @PostMapping("/default-currency")
+    @PatchMapping("/default-currency")
     public Settings setDefaultCurrency(@RequestParam String defaultCurrency) {
         Settings settings = currencySettingsServiceImpl.setDefaultCurrency(defaultCurrency);
         return settings;
