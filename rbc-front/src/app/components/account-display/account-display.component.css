@@ -2,7 +2,21 @@
     padding: 20px;
     margin: auto;
     width: 50%;
+    margin-top: 70px;
 }
+
+/* mat-card-header {
+    width: 500px;
+    
+}
+
+mat-card-title {
+    width: 500px;
+}
+
+mat-card-subtitle {
+    width: 500px;
+} */
 
 /* .mat-card {
     margin: 15px;

@@ -1,5 +1,70 @@
-.main {
+/* .main {
     padding: 20px;
     margin: auto;
     width: 50%;
+} */
+
+.transaction-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    margin: auto;
+    margin-top: 70px;
+}
+
+.transaction-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.transaction-header h2 {
+    margin: 0;
+}
+
+.transaction-header mat-form-field {
+    width: 200px;
+}
+
+mat-card {
+    width: 500px;
+    margin-bottom: 10px;
+    padding: 15px;
+    /* display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px; */
+}
+  
+mat-card-title {
+    font-weight: bold;
+    text-align: left;
+    display: flex;
+    /* flex-direction: column;
+    align-items: flex-end; */
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+  
+mat-card-content {
+    display: flex;
+    /* flex-direction: column;
+    align-items: flex-end; */
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+  
+.transaction-amount {
+    font-size: 20px;
+    font-weight: bold;
+}
+  
+.account-amount {
+    font-size: 14px;
+    color: grey;
 }

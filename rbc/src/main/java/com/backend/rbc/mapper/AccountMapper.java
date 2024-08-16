@@ -15,7 +15,7 @@ public class AccountMapper {
 
         return account;
     }
-    
+
     public static AccountDto mapToDTO(Account account){
         AccountDto accountDto = new AccountDto(
                 account.getId(),

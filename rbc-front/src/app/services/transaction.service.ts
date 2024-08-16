@@ -19,4 +19,8 @@ export class TransactionService {
     return this.http.post<Transaction>(this.url, newTransaction);
   }
 
+  getTransactionsByAccountId(account: number): Observable<Transaction[]> {
+    return this.http.get<Transaction[]>(`${this.url}/account/${account}`);
+  }
+
 }

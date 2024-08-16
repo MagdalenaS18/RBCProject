@@ -1,27 +1,47 @@
-<div class="main">
-  <h2 style=
-        "color: rgb(74, 123, 79);
-        font-weight: bold;">
-        Transactions
-  </h2>
-  <mat-card>
-    <mat-card-header *ngFor="let transaction of transactions">
+<div class="transaction-container">
+  <div class="transaction-header">
+    <h2 style=
+          "color: rgb(74, 123, 79);
+          font-weight: bold;">
+          Transactions
+    </h2>
+    <mat-form-field appearance="outline">
+      <mat-select (selectionChange)="onSelectedAccount($event.value)">
+        <mat-option [value]="null">All Accounts</mat-option>
+        <mat-option *ngFor="let account of accounts" [value]="account.id">
+          {{ account.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+    
+  <div *ngFor="let transaction of transactions">
+    <mat-card>
       <mat-card-title>
-        {{ transaction.description }}
-        <!-- <span [ngClass]="{'transaction-type': transaction.type === 'EXPENSE'}" OVO JE DA OBOJI KLASU > {{ transaction.amount | currency: transaction.account.currency }} -->
-          {{ transaction.type === 'EXPENSE' ? '-' : '' }}{{ transaction.amount }} {{ transaction.currency }}
-        <!-- </span>  -->
+        <p class="transaction-amount">{{ transaction.description }}</p>
+        <p class="transaction-amount">{{ transaction.type === 'EXPENSE' ? '-' : '' }}{{ transaction.amount }} {{ transaction.currency }}</p>
       </mat-card-title>
-      <mat-card-subtitle>
-        {{ transaction.account.name }} {{ transaction.convertedAmount }} {{ transaction.currency }} <!-- ovdje treba od settings currency -->
-      </mat-card-subtitle>
-      <mat-divider></mat-divider>
-    </mat-card-header>
-  </mat-card>
+      <mat-card-content>
+        <p class="account-amount">{{ transaction.account.name }}</p>
+        <p class="account-amount">{{ transaction.type === 'EXPENSE' ? '-' : '' }}{{ transaction.amount | currency: transaction.currency }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
 
 <!-- <select>
-
+<mat-card-header>
+        <mat-card-title>
+          {{ transaction.description }}
+          <span [ngClass]="{'transaction-type': transaction.type === 'EXPENSE'}" OVO JE DA OBOJI KLASU > {{ transaction.amount | currency: transaction.account.currency }}
+            {{ transaction.type === 'EXPENSE' ? '-' : '' }}{{ transaction.amount }} {{ transaction.currency }}
+          </span> 
+        </mat-card-title>
+        <mat-card-subtitle>
+          {{ transaction.account.name }} {{ transaction.convertedAmount }} {{ transaction.currency }} ovdje treba od settings currency
+        </mat-card-subtitle>
+        <mat-divider></mat-divider>
+      </mat-card-header>
 </select> -->
 
 <app-footer></app-footer>
