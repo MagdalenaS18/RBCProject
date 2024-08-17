@@ -9,6 +9,7 @@ import { Account } from '../../models/account';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { AccountService } from '../../services/account.service';
+import { Settings } from '../../models/settings';
 
 @Component({
   selector: 'app-transaction-display',
@@ -23,6 +24,7 @@ export class TransactionDisplayComponent implements OnInit {
   transactions: Transaction[] = [];
   // account!: Account;
   accounts: Account[] = [];
+  settings!: Settings;
 
   constructor(private transactionService: TransactionService, 
               private accountService: AccountService) { }

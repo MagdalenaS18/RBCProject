@@ -1,13 +1,12 @@
 package com.backend.rbc.controllers;
 
 import com.backend.rbc.entities.Settings;
-import com.backend.rbc.services.impl.CurrencySettingsServiceImpl;
+import com.backend.rbc.services.CurrencySettingsService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,36 +16,37 @@ import java.util.Set;
 @RequestMapping("/api/settings")
 public class SettingsController {
     @Autowired
-    private CurrencySettingsServiceImpl currencySettingsServiceImpl;
+    private CurrencySettingsService currencySettingsService;
 
     @GetMapping()
     public Settings getSettingsInfo(){
-        return currencySettingsServiceImpl.getSettingsInfo();
+        return currencySettingsService.getSettingsInfo();
     }
 
     @GetMapping("/default-currency")
     public String getDefaultCurrency() {
-        return currencySettingsServiceImpl.getDefaultCurrency();
+        return currencySettingsService.getDefaultCurrency();
     }
 
     @PatchMapping("/default-currency")
     public Settings setDefaultCurrency(@RequestParam String defaultCurrency) {
-        Settings settings = currencySettingsServiceImpl.setDefaultCurrency(defaultCurrency);
+        Settings settings = currencySettingsService.setDefaultCurrency(defaultCurrency);
         return settings;
     }
+
     @GetMapping("/default-currency/rates")
     public Map<String, Float> fetchConversionRates(){
-        return currencySettingsServiceImpl.fetchRatesForDefaultCurrency();
+        return currencySettingsService.fetchRatesForDefaultCurrency();
     }
 
     @GetMapping("/currency-names")
     public Set<String> getCurrencyNames(){
-        return currencySettingsServiceImpl.getCurrencyNames();
+        return currencySettingsService.getCurrencyNames();
     }
 
-    @GetMapping("/date/{defaultCurrency}")
-    public String getCurrencyDate(@PathVariable String defaultCurrency){
-        return currencySettingsServiceImpl.getDate(defaultCurrency);
+    @GetMapping("/default-currency/date")
+    public String getCurrencyDate(){
+        return currencySettingsService.getDate();
     }
 
 }

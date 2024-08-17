@@ -1,13 +1,32 @@
 <div class="settings-container">
-  <p>Default Currency</p>
-  <form #addCurrencyForm="ngForm" class="settings-form" (ngSubmit)="onSubmit(addCurrencyForm)">
-    <mat-form-field>
-      <mat-label>Default Currency</mat-label>
-      <!-- <mat-label>{{ settings.defaultCurrency }}</mat-label> -->
-      <input matInput name="defaultCurrency" ngModel required>
-    </mat-form-field>
-    <button mat-raised-button type="submit">Save</button>
-  </form>
-  <mat-divider></mat-divider>
-  
+  <mat-card>
+    
+    <mat-card-title>
+        Default Currency
+        <mat-form-field appearance="outline">
+          <mat-select [(ngModel)]="settings.defaultCurrency" (selectionChange)="onDefaultCurrencyChange($event.value)">
+            <mat-option *ngFor="let currency of currencies" [value]="currency">
+              {{ currency | uppercase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      <!-- <form #addCurrencyForm="ngForm" class="settings-form" (ngSubmit)="onSubmit(addCurrencyForm)">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ settings.defaultCurrency }}</mat-label>
+          <input matInput name="defaultCurrency" ngModel required>
+        </mat-form-field>
+        <button mat-raised-button type="submit">Save</button>
+      </form> -->
+    </mat-card-title>
+
+      <mat-divider></mat-divider>
+      <mat-card-title>
+      Delete All Data
+      <button mat-raised-button type="submit" (click)="onDeleteData()">Delete</button></mat-card-title>
+      <mat-divider></mat-divider>
+      <mat-card-title>
+        <p>Exchange rate updated <!-- {{ date }}  ??? --></p>
+        <p> {{ date }} </p>
+      </mat-card-title>
+  </mat-card>
 </div>

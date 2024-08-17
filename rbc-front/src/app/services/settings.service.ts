@@ -25,5 +25,18 @@ export class SettingsService {
       params: { defaultCurrency: currency }
     });
   }
+
+  fetchConversionRates(): Observable<any>{
+    return this.http.get<any>(`${this.url}/default-currency/rates`);
+  }
+
+  getCurrencyNames(): Observable<string[]>{
+    return this.http.get<string[]>(`${this.url}/currency-names`);
+  }
+
+  getConversionDate(): Observable<string>{
+    return this.http.get<string>(`${this.url}/default-currency/date`);
+  }
+  
   
 }
