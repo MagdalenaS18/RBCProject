@@ -7,6 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 @RequiredArgsConstructor
 @AllArgsConstructor
 @RestController
@@ -30,14 +34,19 @@ public class SettingsController {
         Settings settings = currencySettingsServiceImpl.setDefaultCurrency(defaultCurrency);
         return settings;
     }
+    @GetMapping("/default-currency/rates")
+    public Map<String, Float> fetchConversionRates(){
+        return currencySettingsServiceImpl.fetchRatesForDefaultCurrency();
+    }
 
-//    @RequestMapping(value = "/sysDefaultCurrency", method = RequestMethod.GET,
-//            consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public CurrencyResponseBean getCurrencyValue(@RequestParam String currencyName){
-//        CurrencyResponseBean currencyResponseBean = currencyService.fetchCurrenciesValuesByDefaultCurrencyName(currencyName);
-//
-//        return currencyResponseBean;
-//
-//    }
+    @GetMapping("/currency-names")
+    public Set<String> getCurrencyNames(){
+        return currencySettingsServiceImpl.getCurrencyNames();
+    }
+
+    @GetMapping("/date/{defaultCurrency}")
+    public String getCurrencyDate(@PathVariable String defaultCurrency){
+        return currencySettingsServiceImpl.getDate(defaultCurrency);
+    }
 
 }

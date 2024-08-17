@@ -82,8 +82,8 @@ public class TransactionServiceImpl implements TransactionService {
         } else if (transaction.getType() == Type.PROFIT){
             account.setBalance(account.getBalance() + transaction.getAmount());
         }
-        float convertedAmount = currencySettingsServiceImpl.convertToDefaultCurrency(transactionDto.getAmount(), transactionDto.getCurrency());
-        transaction.setConvertedAmount(convertedAmount);
+        //float convertedAmount = currencySettingsServiceImpl.convertToDefaultCurrency(transactionDto.getAmount(), transactionDto.getCurrency());
+        //transaction.setConvertedAmount(convertedAmount);
         transaction.setCurrency(transactionDto.getCurrency());
 
         accountRepository.save(account);

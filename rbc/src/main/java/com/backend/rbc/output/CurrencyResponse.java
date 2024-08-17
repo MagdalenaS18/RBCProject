@@ -1,30 +1,15 @@
 package com.backend.rbc.output;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import lombok.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Data
 public class CurrencyResponse {
     private String date;
     private Map<String, Map<String, Float>> rates = new HashMap<>();
-
-    // Getters and Setters
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public Map<String, Map<String, Float>> getRates() {
-        return rates;
-    }
-
-    public void setRates(Map<String, Map<String, Float>> rates) {
-        this.rates = rates;
-    }
 
     // Method to get rates for a specific base currency
     public Map<String, Float> getRatesForBaseCurrency(String baseCurrency) {
