@@ -26,4 +26,8 @@ export class AccountService {
   addAccount(newAccount: Account): Observable<Account> {
     return this.http.post<Account>(this.url, newAccount);
   }
+
+  deleteAllAccounts(): Observable<Account[]> {
+    return this.http.delete<Account[]>(this.url);
+  }
 }

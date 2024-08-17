@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
+import { AccountService } from '../../services/account.service';
 
 @Component({
   selector: 'app-settings',
@@ -31,7 +32,8 @@ export class SettingsComponent implements OnInit {
   @ViewChild('addCurrencyForm') addCurrencyForm!: NgForm;
   @Output() newDataEmit = new EventEmitter();
 
-  constructor(private settingsService: SettingsService) { }
+  constructor(private settingsService: SettingsService,
+              private accountService: AccountService) { }
 
   ngOnInit() {
     this.getSettings();
@@ -39,10 +41,6 @@ export class SettingsComponent implements OnInit {
     this.getConversionDate();
     this.fetchCurrencies();
   }
-
-  // this.currencyService.getCurrencies().subscribe(data => {
-  //   this.currencies = Object.keys(data.eur); // Adjust based on the base currency from the backend
-  // });
 
   getSettings(): void {
     this.settingsService.getSettingsInfo().subscribe((data) => {
@@ -72,16 +70,16 @@ export class SettingsComponent implements OnInit {
     this.settingsService.setDefaultCurrency(selectedCurrency).subscribe(response => {
       this.currencyType = selectedCurrency;
     });
+  }
 
-    // if(this.selectedCurrency){
-    //   this.settingsService.setDefaultCurrency(this.selectedCurrency).subscribe(response => {
-    //     this.currencyType = this.selectedCurrency;
-    //   })
-    // }
+  deleteAllAccounts(): void {
+    this.accountService.deleteAllAccounts().subscribe(data => {
+      console.log('Data Available: ' + data);
+    })
   }
 
   onDeleteData(): void {
-    
+    return this.deleteAllAccounts();
   }
 
 

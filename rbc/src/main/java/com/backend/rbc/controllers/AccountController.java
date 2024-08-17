@@ -46,4 +46,10 @@ public class AccountController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping()
+    public ResponseEntity deleteAllAccounts(){
+        accountService.deleteAllAccounts();
+        return ResponseEntity.ok().build();
+    }
+
 }
