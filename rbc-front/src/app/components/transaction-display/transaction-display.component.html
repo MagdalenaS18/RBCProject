@@ -19,11 +19,11 @@
     <mat-card>
       <mat-card-title>
         <p class="transaction-amount">{{ transaction.description }}</p>
-        <p class="transaction-amount">{{ transaction.type === 'EXPENSE' ? '-' : '' }}{{ transaction.amount }} {{ transaction.currency }}</p>
+        <p class="transaction-amount">{{ transaction.type === 'EXPENSE' ? '-' : '' }}{{ transaction.amount }} {{ transaction.currency | uppercase }}</p>
       </mat-card-title>
       <mat-card-content>
         <p class="account-amount">{{ transaction.account.name }}</p>
-        <p class="account-amount">{{ transaction.type === 'EXPENSE' ? '-' : '' }}{{ transaction.amount | currency: transaction.currency }}</p>
+        <p class="account-amount">{{ transaction.type === 'EXPENSE' ? '-' : '' }}{{ convertToDefaultCurrency(transaction.amount, transaction.currency) | number:'1.2-2'}}{{ defaultCurrency | uppercase }}</p>
       </mat-card-content>
     </mat-card>
   </div>

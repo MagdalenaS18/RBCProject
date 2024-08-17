@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { AccountService } from '../../services/account.service';
 import { Settings } from '../../models/settings';
+import { SettingsService } from '../../services/settings.service';
 
 @Component({
   selector: 'app-transaction-display',
@@ -24,14 +25,54 @@ export class TransactionDisplayComponent implements OnInit {
   transactions: Transaction[] = [];
   // account!: Account;
   accounts: Account[] = [];
-  settings!: Settings;
+  defaultCurrency!: string;
+  conversionRates: { [key: string]: number } = {};
 
   constructor(private transactionService: TransactionService, 
-              private accountService: AccountService) { }
+              private accountService: AccountService,
+              private settingsService: SettingsService) { }
 
   ngOnInit(): void {
     this.getAllTransactions();  // BEZ OVOG NIJE RADILO!!
     this.loadAllAccounts();
+    this.fetchDefaultCurrency();
+  }
+
+  fetchDefaultCurrency(): void {
+    this.settingsService.getDefaultCurrency().subscribe(data => {
+      this.defaultCurrency = data;
+      this.fetchCurrencies();
+    })
+  }
+
+  fetchCurrencies(): void {
+    this.settingsService.fetchConversionRates().subscribe(data => {
+      this.conversionRates = data;
+      console.log('Conversion rates:', this.conversionRates);
+    });
+  }
+
+  convertToDefaultCurrency(amount: number, currency: string): number {
+    // console.log('Amount:', amount, 'Currency:', currency, 'Rate:', this.conversionRates[currency]);
+    // if(!this.conversionRates || !this.conversionRates[currency.toLowerCase()]){
+    //   return amount;
+    // }
+    console.log(`Converting amount: ${amount} from currency: ${currency}`);
+    // const currencyKey = currency.toLowerCase();
+    if (currency === this.defaultCurrency) {
+      return amount;
+    }
+    const rate = this.conversionRates[currency];
+    console.log('Amount:', amount, 'Currency:', currency, 'Rate:', this.conversionRates[currency]);
+    return rate ? amount / rate : amount;
+    //  
+    // if(currency === this.defaultCurrency){
+    //   return amount;
+    // }
+
+    // const rate = this.conversionRates[currency];
+    // console.log('Amount:', amount, 'Currency:', currency, 'Rate:', this.conversionRates[currency]);
+    // return rate ? amount / rate : amount;
   }
 
   getAllTransactions(): void {

@@ -59,7 +59,7 @@ public class AccountServiceImpl implements AccountService {
         }
         else{
             account.setName(accountDto.getName());
-            account.setCurrency(accountDto.getCurrency());
+            account.setCurrency(accountDto.getCurrency().toLowerCase());
         }
 
         if(accountDto.getBalance() < 1){
@@ -80,7 +80,7 @@ public class AccountServiceImpl implements AccountService {
                 .orElseThrow(() -> new AccountNotFoundException());
 
         account.setName(accountDto.getName());
-        account.setCurrency(accountDto.getCurrency());
+        account.setCurrency(accountDto.getCurrency().toLowerCase());
         account.setBalance(accountDto.getBalance());
         account.setTransactions(account.getTransactions());
 

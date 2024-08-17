@@ -16,18 +16,18 @@ export class SettingsService {
   }
 
   getDefaultCurrency(): Observable<string>{
-    return this.http.get<string>(`${this.url}/default-currency`);
+    return this.http.get(`${this.url}/default-currency`, { responseType: 'text' });  // kad stavim get<string> Angular misli da treba dobiti JSON
+    // a dobije obican tekst
   }
 
   setDefaultCurrency(currency: string): Observable<any> {
-    // const settings: Settings = { id:1, defaultCurrency: currency }
     return this.http.patch<Settings>(`${this.url}/default-currency`, null, {
       params: { defaultCurrency: currency }
     });
   }
 
-  fetchConversionRates(): Observable<any>{
-    return this.http.get<any>(`${this.url}/default-currency/rates`);
+  fetchConversionRates(): Observable<{ [key: string]: number }>{
+    return this.http.get< { [key: string]: number} >(`${this.url}/default-currency/rates`);
   }
 
   getCurrencyNames(): Observable<string[]>{
@@ -35,7 +35,7 @@ export class SettingsService {
   }
 
   getConversionDate(): Observable<string>{
-    return this.http.get<string>(`${this.url}/default-currency/date`);
+    return this.http.get(`${this.url}/default-currency/date`, { responseType: 'text' });
   }
   
   

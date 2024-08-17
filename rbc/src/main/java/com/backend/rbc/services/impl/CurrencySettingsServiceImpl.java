@@ -34,6 +34,11 @@ public class CurrencySettingsServiceImpl implements CurrencySettingsService {
 
     @Override
     public Settings getSettingsInfo() {
+//        Settings settings = settingsRepository.findAll().stream().findFirst().orElseThrow(() ->
+//                new RuntimeException("Default currency not set in settings"));
+//        settings.setDefaultCurrency(getDefaultCurrency());
+//        settings.setDate(getDate());
+//        return settings;
         return settingsRepository.findAll().stream().findFirst().orElseThrow(() ->
                 new RuntimeException("Default currency not set in settings"));
     }

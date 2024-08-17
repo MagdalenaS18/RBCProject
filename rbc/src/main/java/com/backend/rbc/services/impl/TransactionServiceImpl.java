@@ -84,7 +84,7 @@ public class TransactionServiceImpl implements TransactionService {
         }
         //float convertedAmount = currencySettingsServiceImpl.convertToDefaultCurrency(transactionDto.getAmount(), transactionDto.getCurrency());
         //transaction.setConvertedAmount(convertedAmount);
-        transaction.setCurrency(transactionDto.getCurrency());
+        transaction.setCurrency(transactionDto.getCurrency().toLowerCase());
 
         accountRepository.save(account);
         Transaction newTransaction = transactionRepository.save(transaction);
@@ -101,6 +101,7 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setType(transactionDto.getType());
         transaction.setAccount(transactionDto.getAccount());
         transaction.setAmount(transactionDto.getAmount());
+        transaction.setCurrency(transactionDto.getCurrency().toLowerCase());
 
         TransactionDto newTransactionDto = transactionMapper.mapToDTO(transaction);
 

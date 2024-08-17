@@ -4,7 +4,7 @@
     <mat-card-title>
         Default Currency
         <mat-form-field appearance="outline">
-          <mat-select [(ngModel)]="settings.defaultCurrency" (selectionChange)="onDefaultCurrencyChange($event.value)">
+          <mat-select [value]="currencyType" (selectionChange)="onDefaultCurrencyChange($event.value)">
             <mat-option *ngFor="let currency of currencies" [value]="currency">
               {{ currency | uppercase }}
             </mat-option>
