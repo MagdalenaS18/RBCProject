@@ -11,6 +11,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AccountInputComponent } from '../account-input/account-input.component';
 import { FooterComponent } from '../footer/footer.component';
 import { NavbarComponent } from "../navbar/navbar.component";
+import { SettingsService } from '../../services/settings.service';
 
 @Component({
   selector: 'app-account-display',
@@ -24,17 +25,17 @@ import { NavbarComponent } from "../navbar/navbar.component";
 })
 export class AccountDisplayComponent implements OnInit {
   accounts: Account[] = [];
+  defaultCurrency!: string;
+  conversionRates: { [ key: string ]: number } = {};
   //@Input() account: Account = new Account(0, "", "", 0);
 
-  constructor(private accountService: AccountService, 
+  constructor(private accountService: AccountService,
+              private settingsService: SettingsService,
               private dialog: MatDialog) { }
 
   ngOnInit(): void{
-    // this.accountService.getAccounts().subscribe((data) => {
-    //   this.accounts = data
-    // });  // response cuvam u accounts field
-
     this.getAllAccounts();
+    this.fetchDefaultCurrency();
   }
 
   getAllAccounts(): void {
@@ -43,10 +44,36 @@ export class AccountDisplayComponent implements OnInit {
     });
   }
 
+  fetchDefaultCurrency(): void {
+    this.settingsService.getDefaultCurrency().subscribe(data => {
+      this.defaultCurrency = data;
+      this.fetchCurrencies();
+    })
+  }
+
+  fetchCurrencies(): void {
+    this.settingsService.fetchConversionRates().subscribe(data => {
+      this.conversionRates = data;
+    })
+  }
+
+  convertToDefaultCurrency(amount: number, currency: string): number {
+    if(!this.conversionRates || !this.conversionRates[currency]){
+      return amount;
+    }
+
+    if(currency === this.defaultCurrency){
+      return amount;
+    }
+
+    const rate = this.conversionRates[currency];
+
+    return amount/rate;
+  }
+
   openAddAccountDialog(): void {
     const dialogRef = this.dialog.open(AccountInputComponent, {
       width: '400px',
-      // height: '300px',
       enterAnimationDuration: '250ms',
       exitAnimationDuration: '200ms'
     });
@@ -57,7 +84,6 @@ export class AccountDisplayComponent implements OnInit {
           this.getAllAccounts();
         });
       }
-      // this.getAllAccounts();
     });
   }
 

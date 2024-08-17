@@ -17,11 +17,11 @@
     <mat-card>
       <mat-card-title>
         <p class="account">{{ account.name }}</p>
-        <p class="account">{{ account.balance }} {{ account.currency }}</p>
+        <p class="account">{{ account.balance }} {{ account.currency | uppercase }}</p>
       </mat-card-title>
       <mat-card-content>
         <p></p>
-        <p class="balance-currency">{{ account.balance | currency: account.currency }}</p>
+        <p class="balance-currency">{{ convertToDefaultCurrency(account.balance, account.currency) | number:'1.2-2' }}{{ defaultCurrency | uppercase }}</p>
       </mat-card-content>
       <!-- <mat-divider></mat-divider> -->
     </mat-card>

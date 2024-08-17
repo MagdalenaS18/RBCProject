@@ -53,26 +53,17 @@ export class TransactionDisplayComponent implements OnInit {
   }
 
   convertToDefaultCurrency(amount: number, currency: string): number {
-    // console.log('Amount:', amount, 'Currency:', currency, 'Rate:', this.conversionRates[currency]);
-    // if(!this.conversionRates || !this.conversionRates[currency.toLowerCase()]){
-    //   return amount;
-    // }
+    if(!this.conversionRates || !this.conversionRates[currency]){
+      return amount;
+    }
     console.log(`Converting amount: ${amount} from currency: ${currency}`);
-    // const currencyKey = currency.toLowerCase();
     if (currency === this.defaultCurrency) {
       return amount;
     }
     const rate = this.conversionRates[currency];
     console.log('Amount:', amount, 'Currency:', currency, 'Rate:', this.conversionRates[currency]);
-    return rate ? amount / rate : amount;
-    //  
-    // if(currency === this.defaultCurrency){
-    //   return amount;
-    // }
 
-    // const rate = this.conversionRates[currency];
-    // console.log('Amount:', amount, 'Currency:', currency, 'Rate:', this.conversionRates[currency]);
-    // return rate ? amount / rate : amount;
+    return amount/rate;
   }
 
   getAllTransactions(): void {

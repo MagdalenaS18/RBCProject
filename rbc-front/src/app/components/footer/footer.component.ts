@@ -23,6 +23,8 @@ export class FooterComponent implements OnInit {
   accounts: Account[] = [];
   transactions: Transaction[] = [];
   availableAmount: number = 0;
+  defaultCurrency!: string;
+  conversionRates: { [ key: string]: number } = {};
 
 
   constructor(private accountService: AccountService,
@@ -32,11 +34,14 @@ export class FooterComponent implements OnInit {
 
   ngOnInit() {
     // this.getAvailableAmount();
+    this.loadAccounts();
+    this.getDefaultCurrency();
   }
 
   loadAccounts(): void {
-    this.accountService.getAccounts().subscribe((accounts) => {
-      this.accounts = accounts;
+    this.accountService.getAccounts().subscribe((data: Account[]) => {
+      this.accounts = data;
+      this.calculateAvailableAmount();
     })
   }
 
@@ -44,6 +49,23 @@ export class FooterComponent implements OnInit {
     this.transactionService.getTransactions().subscribe((data: Transaction[]) => {
       this.transactions = data;
     })
+  }
+
+  getDefaultCurrency(): void {
+    this.settingsService.getDefaultCurrency().subscribe(data => {
+      this.defaultCurrency = data;
+      this.fetchCurrencyRates();
+    });
+  }
+
+  fetchCurrencyRates(): void {
+    this.settingsService.fetchConversionRates().subscribe(data => {
+      this.conversionRates = data;
+    })
+  }
+
+  calculateAvailableAmount(): void {
+    this.availableAmount = this.accounts.reduce((sum, account) => sum + account.balance, 0);
   }
   
   openNewTransactionDialog(){
