@@ -8,7 +8,7 @@
             (click)="openNewTransactionDialog()">
               Add Transaction
     </button>
-    Available: {{ availableAmount }} {{ defaultCurrency | uppercase }}
+    Available: {{ availableAmount | number:'1.2-2' }} {{ defaultCurrency | uppercase }}
   </mat-toolbar>
 </div>
 

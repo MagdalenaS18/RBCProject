@@ -25,6 +25,7 @@ export class FooterComponent implements OnInit {
   availableAmount: number = 0;
   defaultCurrency!: string;
   conversionRates: { [ key: string]: number } = {};
+  accountsBalances: number[] = [];
 
 
   constructor(private accountService: AccountService,
@@ -41,7 +42,6 @@ export class FooterComponent implements OnInit {
   loadAccounts(): void {
     this.accountService.getAccounts().subscribe((data: Account[]) => {
       this.accounts = data;
-      this.calculateAvailableAmount();
     })
   }
 
@@ -61,12 +61,32 @@ export class FooterComponent implements OnInit {
   fetchCurrencyRates(): void {
     this.settingsService.fetchConversionRates().subscribe(data => {
       this.conversionRates = data;
+      this.calculateAvailableAmount();
     })
   }
 
   calculateAvailableAmount(): void {
-    this.availableAmount = this.accounts.reduce((sum, account) => sum + account.balance, 0);
+    this.accountService.getAccounts().subscribe(accounts => {
+      this.availableAmount = accounts.reduce((sum, account) => {
+        const convertedBalance = this.convertToDefaultCurrency(account.balance, account.currency);
+        return sum + convertedBalance;  // postavlja vrijednost availableAmount
+      }, 0);
+    })
+    // this.availableAmount = this.accounts.reduce((sum, account) => sum + account.balance, 0);
     // moram uvesti logiku za konvertovanje na default valutu pa onda da sumira sve
+  }
+
+  convertToDefaultCurrency(balance: number, currency: string): number {
+    if(!this.conversionRates || !this.conversionRates[currency]){
+      return balance;
+    }
+
+    if(currency === this.defaultCurrency){
+      return balance;
+    }
+
+    const rate = this.conversionRates[currency];
+    return balance/rate;
   }
   
   openNewTransactionDialog(){
