@@ -66,6 +66,7 @@ export class FooterComponent implements OnInit {
 
   calculateAvailableAmount(): void {
     this.availableAmount = this.accounts.reduce((sum, account) => sum + account.balance, 0);
+    // moram uvesti logiku za konvertovanje na default valutu pa onda da sumira sve
   }
   
   openNewTransactionDialog(){

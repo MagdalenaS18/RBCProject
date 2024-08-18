@@ -11,16 +11,17 @@ import { Account } from '../../models/account';
 import { CommonModule } from '@angular/common';
 import { TransactionService } from '../../services/transaction.service';
 import { AccountService } from '../../services/account.service';
+import { SettingsService } from '../../services/settings.service';
 
 @Component({
   selector: 'app-transaction-input',
   templateUrl: './transaction-input.component.html',
   styleUrls: ['./transaction-input.component.css'],
   standalone: true,
-  imports: [CommonModule, MatInputModule, MatFormFieldModule,
-            FormsModule, MatButtonModule,
+  imports: [CommonModule, MatInputModule,
+            FormsModule, MatFormFieldModule,
             MatDialogModule, MatSelectModule,
-            MatIconModule
+            MatIconModule, MatButtonModule
   ]
 })
 export class TransactionInputComponent implements OnInit {
@@ -34,12 +35,42 @@ export class TransactionInputComponent implements OnInit {
     currency: '',
     account: null
   };  // da mogu koristiti ngModel jer to i jest 2-way-binding
+  defaultCurrency!: string;
+  currencies!: string[];
+  transactions!: Transaction[];
 
-  constructor(private transactionService: TransactionService, private accountService: AccountService, private dialogRef: MatDialogRef<TransactionInputComponent>) { }
+  constructor(private transactionService: TransactionService, 
+              private accountService: AccountService, 
+              private settingsService: SettingsService,
+              private dialogRef: MatDialogRef<TransactionInputComponent>) { }
 
   ngOnInit() {
+    this.getAccounts();
+    this.fetchDefaultCurrency();
+  }
+
+  getTransactions(): void {
+    this.transactionService.getTransactions().subscribe(data => {
+      this.transactions = data;
+    })
+  }
+
+  getAccounts(): void {
     this.accountService.getAccounts().subscribe((data: Account[]) => {
       this.accounts = data;
+    });
+  }
+
+  fetchDefaultCurrency(): void {
+    this.settingsService.getDefaultCurrency().subscribe((data: string) => {
+      this.defaultCurrency = data;
+      this.fetchCurrencyRates();
+    });
+  }
+
+  fetchCurrencyRates(): void {
+    this.settingsService.fetchConversionRates().subscribe(data => {
+      this.currencies = Object.keys(data);
     });
   }
 
@@ -60,6 +91,7 @@ export class TransactionInputComponent implements OnInit {
         this.dialogRef.close();
       });
     }
+    // this.getTransactions();
   }
 
   onCancel(): void {

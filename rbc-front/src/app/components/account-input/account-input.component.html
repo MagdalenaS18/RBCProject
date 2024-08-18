@@ -4,17 +4,26 @@
     <div mat-dialog-content>
       <mat-form-field class="account-full-width">
         <mat-label>Name</mat-label>
-        <input matInput name="name" ngModel required>
+        <input matInput name="name" [(ngModel)]="account.name" required>
       </mat-form-field>
+
+      <!-- <mat-form-field class="account-full-width">
+        <mat-label>Currency</mat-label>
+        <input matInput name="currency" ngModel required>
+      </mat-form-field> -->
 
       <mat-form-field class="account-full-width">
         <mat-label>Currency</mat-label>
-        <input matInput name="currency" ngModel required>
+        <mat-select name="currency" [(ngModel)]="account.currency" required>
+          <mat-option *ngFor="let currency of currencies" [value]="currency">
+            {{ currency | uppercase }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
 
       <mat-form-field class="account-full-width">
         <mat-label>Balance</mat-label>
-        <input matInput type="number" name="balance" ngModel required>
+        <input matInput type="number" name="balance" [(ngModel)]="account.balance" required>
       </mat-form-field>
     </div>
     <div mat-dialog-actions class="form-buttons">

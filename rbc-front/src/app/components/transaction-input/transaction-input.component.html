@@ -4,7 +4,7 @@
     <div mat-dialog-content>
       <mat-form-field class="transaction-full-width">
         <mat-label>Description</mat-label>
-        <input matInput [(ngModel)]="transaction.description" name="description" ngModel required>
+        <input matInput [(ngModel)]="transaction.description" name="description" required>
       </mat-form-field>
 
       <mat-form-field class="transaction-full-width">
@@ -27,12 +27,17 @@
 
       <mat-form-field class="transaction-full-width">
         <mat-label>Amount</mat-label>
-        <input matInput [(ngModel)]="transaction.amount" name="amount" ngModel required>
+        <input matInput [(ngModel)]="transaction.amount" name="amount" required>
       </mat-form-field>
 
       <mat-form-field class="transaction-full-width">
         <mat-label>Currency</mat-label>
-        <input matInput [(ngModel)]="transaction.currency" name="currency" ngModel required>
+        <mat-select name="currency" [(ngModel)]="transaction.currency" required>
+          <mat-option *ngFor="let currency of currencies" [value]="currency">
+            {{ currency | uppercase }}
+          </mat-option>
+        </mat-select>
+        <!-- <input matInput [(ngModel)]="transaction.currency" name="currency" ngModel required> -->
       </mat-form-field>
     </div>
     <div mat-dialog-actions class="form-buttons">

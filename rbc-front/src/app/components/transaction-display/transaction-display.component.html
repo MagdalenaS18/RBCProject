@@ -6,6 +6,7 @@
           Transactions
     </h1>
     <mat-form-field appearance="outline">
+      <mat-label>Filter by Account</mat-label>
       <mat-select (selectionChange)="onSelectedAccount($event.value)">
         <mat-option [value]="null">All Accounts</mat-option>
         <mat-option *ngFor="let account of accounts" [value]="account.id">

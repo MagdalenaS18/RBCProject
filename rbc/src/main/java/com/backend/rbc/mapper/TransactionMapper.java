@@ -11,7 +11,6 @@ public class TransactionMapper {
                 transactionDto.getType(),
                 transactionDto.getAccount(),
                 transactionDto.getAmount(),
-                transactionDto.getConvertedAmount(),
                 transactionDto.getCurrency()
         );
 
@@ -25,7 +24,6 @@ public class TransactionMapper {
                 transaction.getType(),
                 transaction.getAccount(),
                 transaction.getAmount(),
-                transaction.getConvertedAmount(),
                 transaction.getCurrency()
         );
 

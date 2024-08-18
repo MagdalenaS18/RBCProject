@@ -13,8 +13,8 @@ public class TransactionDto {
     private Long id;
     private String description;
     private Type type;
-    private Account account; // bilo Account
+    private Account account;
     private Float amount;
-    private Float convertedAmount;
+//    private Float convertedAmount;
     private String currency;
 }

@@ -9,6 +9,9 @@ import { HttpClient } from '@angular/common/http';
 import { Account } from '../../models/account';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { AccountService } from '../../services/account.service';
+import { SettingsService } from '../../services/settings.service';
+import { MatSelectModule } from '@angular/material/select';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-account-input',
@@ -17,36 +20,69 @@ import { AccountService } from '../../services/account.service';
   standalone: true,
   imports: [MatInputModule, MatFormFieldModule, 
             FormsModule, MatIconModule, 
-            MatButtonModule, MatDialogModule
+            MatButtonModule, MatDialogModule,
+            MatSelectModule, CommonModule
   ]
 })
 export class AccountInputComponent implements OnInit {
-  // newAccount!: Account;
   @ViewChild("addAccountForm") addAccountForm!: NgForm; // ovdje smjestimo sve podatke sto dobijemo preko forme
-
   @Output() newDataEvent = new EventEmitter();  // kad se kreira novi account da se prikaze na main strani
   // takodje da obavijesti roditelja komponente
-  constructor(private dialogRef: MatDialogRef<AccountInputComponent>) { }
+  account: Account = {
+    name: '',
+    currency: '',
+    balance: 0
+  };
+  accounts!: Account[];
+  defaultCurrency!: string;
+  currencies: string[] = [];
+  
+  constructor(private accountService: AccountService,
+              private settingsService: SettingsService, 
+              private dialogRef: MatDialogRef<AccountInputComponent>) { }
 
   ngOnInit() {
     // this.newAccount = this.data;
+    this.getDefaultCurrency();
   }
 
-  
+  getAccounts(): void {
+    this.accountService.getAccounts().subscribe(data => {
+      this.accounts = data;
+    });
+  }
 
-  // onAdd(){
-  //   if(this.addAccountForm.valid){}
-  // }
+  getDefaultCurrency(): void {
+    this.settingsService.getDefaultCurrency().subscribe(data => {
+      this.defaultCurrency = data;
+      this.fetchCurrencies();
+    })
+  }
+
+  fetchCurrencies(): void {
+    this.settingsService.fetchConversionRates().subscribe(data => {
+      this.currencies = Object.keys(data);
+    })
+  }
 
   onSubmit(): void {
-    if(this.addAccountForm.valid){
-      this.newDataEvent.emit(this.addAccountForm.value);  // account se kreira samo kad se klikne Create, a ne i kad kliknem Cancel
-      this.dialogRef.close(this.addAccountForm.value);
+    if(this.addAccountForm.valid && (this.account.balance > 1)){
+      const selectedCurrency = this.currencies.find(currency => this.account.currency === currency);
+      // const accountData = {
+      //   ...this.account,
+        
+      // }
+      this.account.currency != selectedCurrency;
 
+      this.accountService.addAccount(this.account).subscribe(() => {
+        this.newDataEvent.emit(this.addAccountForm.value);  // account se kreira samo kad se klikne Create, a ne i kad kliknem Cancel
+        this.dialogRef.close();
+      });
       // this.accountService.addAccount(this.addAccountForm.value).subscribe(data => {
       // this.newDataEvent.emit(data);
       // this.dialogRef.close();
     }
+    // this.getAccounts();
   }
   
   onCancel(){
