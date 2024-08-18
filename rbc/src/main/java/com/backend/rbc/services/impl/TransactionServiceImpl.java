@@ -2,10 +2,12 @@ package com.backend.rbc.services.impl;
 
 import com.backend.rbc.dtos.TransactionDto;
 import com.backend.rbc.entities.Account;
+import com.backend.rbc.entities.Settings;
 import com.backend.rbc.entities.Transaction;
 import com.backend.rbc.enums.Type;
 import com.backend.rbc.exceptions.*;
 import com.backend.rbc.mapper.TransactionMapper;
+import com.backend.rbc.output.CurrencyResponse;
 import com.backend.rbc.repository.AccountRepository;
 import com.backend.rbc.repository.TransactionRepository;
 import com.backend.rbc.services.TransactionService;
@@ -13,7 +15,9 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
@@ -27,6 +31,8 @@ public class TransactionServiceImpl implements TransactionService {
     private AccountRepository accountRepository;
     @Autowired
     private CurrencySettingsServiceImpl currencySettingsServiceImpl;
+    @Autowired
+    private RestTemplate restTemplate;
 
     private TransactionMapper transactionMapper;
 
@@ -74,15 +80,16 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setAmount(transactionDto.getAmount());
         transaction.setAccount(account);
 
+        float convertedAmount = convertToDefaultCurrency(transactionDto.getAmount(), transactionDto.getCurrency(), accountId);
         if(transaction.getType() == Type.EXPENSE){
-            if(account.getBalance() < transaction.getAmount()) {
+            if(account.getBalance() < convertedAmount) {
                 throw new NotEnoughMoneyException();
             }
-            account.setBalance(account.getBalance() - transaction.getAmount());
+            account.setBalance(account.getBalance() - convertedAmount);
         } else if (transaction.getType() == Type.PROFIT){
-            account.setBalance(account.getBalance() + transaction.getAmount());
+            account.setBalance(account.getBalance() + convertedAmount);
         }
-        //float convertedAmount = currencySettingsServiceImpl.convertToDefaultCurrency(transactionDto.getAmount(), transactionDto.getCurrency());
+//        float convertedAmount = currencySettingsServiceImpl.convertToDefaultCurrency(transactionDto.getAmount(), transactionDto.getCurrency());
         //transaction.setConvertedAmount(convertedAmount);
         transaction.setCurrency(transactionDto.getCurrency().toLowerCase());
 
@@ -120,6 +127,37 @@ public class TransactionServiceImpl implements TransactionService {
             throw new NoDataToDeleteException();
         }
         transactionRepository.deleteAll();
+    }
+
+    public float convertToDefaultCurrency(float amount, String transactionCurrency, Long accountId) {
+//        String defaultCurrency = getDefaultCurrency().toUpperCase();
+//        Settings settings = settingsRepository.findAll().stream().findFirst().orElseThrow(() ->
+//                new RuntimeException("Default currency not set in settings"));
+//        String defaultCurrency = settings.getDefaultCurrency().toUpperCase();
+        Account account = accountRepository.findById(accountId).orElseThrow(() ->
+                new AccountNotFoundException());
+
+        if (transactionCurrency.equals(account.getCurrency())) {
+            return amount;
+        }
+
+        String apiUrl = String.format("https://latest.currency-api.pages.dev/v1/currencies/%s.json", transactionCurrency.toLowerCase());
+        System.out.println("\t\t api: " + apiUrl);
+        ResponseEntity<CurrencyResponse> response = restTemplate.getForEntity(apiUrl, CurrencyResponse.class);
+        System.out.println("\t\t response: " + response);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            CurrencyResponse currencyResponse = response.getBody();
+            System.out.println("\t\t response: " + currencyResponse);
+            Map<String, Float> rates = currencyResponse.getRatesForBaseCurrency(transactionCurrency);
+
+            Float conversionRate = rates.get(account.getCurrency().toLowerCase());
+            if (conversionRate != null) {
+                return amount * conversionRate;
+            }
+        }
+
+        throw new UnableToFetchCurrenciesException();
     }
 
 }

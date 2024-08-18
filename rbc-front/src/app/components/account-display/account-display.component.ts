@@ -26,7 +26,7 @@ import { SettingsService } from '../../services/settings.service';
 export class AccountDisplayComponent implements OnInit {
   accounts: Account[] = [];
   defaultCurrency!: string;
-  conversionRates: { [ key: string ]: number } = {};
+  conversionRates: { [key: string]: number } = {};
   //@Input() account: Account = new Account(0, "", "", 0);
 
   constructor(private accountService: AccountService,
@@ -57,18 +57,18 @@ export class AccountDisplayComponent implements OnInit {
     })
   }
 
-  convertToDefaultCurrency(amount: number, currency: string): number {
+  convertToDefaultCurrency(balance: number, currency: string): number {
     if(!this.conversionRates || !this.conversionRates[currency]){
-      return amount;
+      return balance;
     }
 
     if(currency === this.defaultCurrency){
-      return amount;
+      return balance;
     }
 
     const rate = this.conversionRates[currency];
 
-    return amount/rate;
+    return balance/rate;
   }
 
   openAddAccountDialog(): void {

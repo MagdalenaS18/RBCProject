@@ -17,4 +17,6 @@ public interface TransactionService {
     void deleteTransaction(Long id);
     void deleteAllTransactions();
 
+    float convertToDefaultCurrency(float amount, String transactionCurrency, Long accountId);
+
 }
