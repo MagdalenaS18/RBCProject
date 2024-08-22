@@ -1,6 +1,8 @@
 package com.backend.rbc.services.impl;
 
 import com.backend.rbc.entities.Settings;
+import com.backend.rbc.exceptions.DefaultCurrencyNotSetException;
+import com.backend.rbc.exceptions.SettingsNotFoundException;
 import com.backend.rbc.exceptions.UnableToFetchCurrenciesException;
 import com.backend.rbc.output.CurrencyResponse;
 import com.backend.rbc.repository.CurrencySettingsRepository;
@@ -21,8 +23,8 @@ import java.util.Set;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class CurrencySettingsServiceImpl implements CurrencySettingsService {
-    @Autowired
-    private RestTemplate restTemplate;
+//    @Autowired
+//    private RestTemplate restTemplate;
 
     @Autowired
     private CurrencySettingsRepository settingsRepository;
@@ -40,20 +42,20 @@ public class CurrencySettingsServiceImpl implements CurrencySettingsService {
 //        settings.setDate(getDate());
 //        return settings;
         return settingsRepository.findAll().stream().findFirst().orElseThrow(() ->
-                new RuntimeException("Default currency not set in settings"));
+                new SettingsNotFoundException());
     }
 
     @Override
     public String getDefaultCurrency() {
         Settings settings = settingsRepository.findAll().stream().findFirst().orElseThrow(() ->
-                new RuntimeException("Default currency not set in settings"));
+                new DefaultCurrencyNotSetException());
         return settings.getDefaultCurrency();
     }
 
     @Override
     public Settings setDefaultCurrency(String currencyName){
         Settings settings = settingsRepository.findAll().stream().findFirst().orElseThrow(() ->
-                new RuntimeException("Default currency not set in settings"));
+                new SettingsNotFoundException());
 //        settings.setId(settings.getId());
         settings.setDefaultCurrency(currencyName);
         settingsRepository.save(settings);
@@ -63,8 +65,9 @@ public class CurrencySettingsServiceImpl implements CurrencySettingsService {
     @Override
     public Set<String> getCurrencyNames() {
         Settings settings = settingsRepository.findAll().stream().findFirst().orElseThrow(() ->
-                new RuntimeException("Default currency not set in settings"));
+                new DefaultCurrencyNotSetException());
         String defaultCurrency = settings.getDefaultCurrency();
+        RestTemplate restTemplate = new RestTemplate();
         String url = "https://latest.currency-api.pages.dev/v1/currencies/" + defaultCurrency.toLowerCase() + ".json";
         Map<String, Object> response = restTemplate.getForObject(url, HashMap.class);
 //        Map<String, Object> currencies = getCurrencies(defaultCurrency);
@@ -75,8 +78,9 @@ public class CurrencySettingsServiceImpl implements CurrencySettingsService {
     @Override
     public String getDate() {
         Settings settings = settingsRepository.findAll().stream().findFirst().orElseThrow(() ->
-                new RuntimeException("Default currency not set in settings"));
+                new DefaultCurrencyNotSetException());
         String defaultCurrency = settings.getDefaultCurrency();
+        RestTemplate restTemplate = new RestTemplate();
         String url = "https://latest.currency-api.pages.dev/v1/currencies/" + defaultCurrency.toLowerCase() + ".json";
         Map<String, Object> response = restTemplate.getForObject(url, HashMap.class);
 //        Map<String, Object> currencies = getCurrencies(defaultCurrency);
@@ -85,6 +89,7 @@ public class CurrencySettingsServiceImpl implements CurrencySettingsService {
 
     @Override
     public Map<String, Object> getCurrencies(String defaultCurrency) {
+        RestTemplate restTemplate = new RestTemplate();
         String url = "https://latest.currency-api.pages.dev/v1/currencies/" + defaultCurrency.toLowerCase() + ".json";
         Map<String, Object> response = restTemplate.getForObject(url, HashMap.class);
         return response;
@@ -93,11 +98,12 @@ public class CurrencySettingsServiceImpl implements CurrencySettingsService {
     public Map<String, Float> fetchRatesForDefaultCurrency() {
 //        String defaultCurrency = getDefaultCurrency().toLowerCase();
         Settings settings = settingsRepository.findAll().stream().findFirst().orElseThrow(() ->
-                new RuntimeException("Default currency not set in settings"));
+                new DefaultCurrencyNotSetException());
         String defaultCurrency = settings.getDefaultCurrency().toLowerCase();
 
         String apiUrl = "https://latest.currency-api.pages.dev/v1/currencies/" + defaultCurrency.toLowerCase() + ".json";
         System.out.println("\t\t api: " + apiUrl);
+        RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<CurrencyResponse> response = restTemplate.getForEntity(apiUrl, CurrencyResponse.class);
         System.out.println("\t\t response: " + response);
 

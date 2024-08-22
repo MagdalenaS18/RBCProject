@@ -78,11 +78,14 @@ export class AccountDisplayComponent implements OnInit {
       exitAnimationDuration: '200ms'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if(result){
-        this.accountService.addAccount(result).subscribe(() => {
-          this.getAllAccounts();
-        });
+    dialogRef.afterClosed().subscribe((newAccount: Account) => {
+      if(newAccount){
+        this.accounts.push(newAccount); // Update the UI with the new account
+        this.getAllAccounts(); 
+        // this.accountService.addAccount(result).subscribe((newAccount: Account) => {
+        //   this.accounts.push(newAccount);
+        //   this.getAllAccounts();
+        // });
       }
     });
   }

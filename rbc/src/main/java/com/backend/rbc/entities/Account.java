@@ -33,7 +33,7 @@ public class Account {
     private float balance;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Transaction> transactions;
 
 //    public Account(Long id, String name, String currency, float balance, List<Transaction> transactions) {

@@ -34,7 +34,6 @@ export class FooterComponent implements OnInit {
               private dialog: MatDialog) { }
 
   ngOnInit() {
-    // this.getAvailableAmount();
     this.loadAccounts();
     this.getDefaultCurrency();
   }
@@ -98,12 +97,16 @@ export class FooterComponent implements OnInit {
     const selectAccountDialog = dialogRef.componentInstance;
     selectAccountDialog.setAccounts(this.accounts);
 
-    dialogRef.afterClosed().subscribe(result => {
-      if(result){
-        this.transactionService.addTransaction(result).subscribe(() => {
-          this.getAllTransactions();
-        });
+    dialogRef.afterClosed().subscribe((newTransaction: Transaction) => {
+      if(newTransaction){
+        this.transactions.push(newTransaction);
+        this.getAllTransactions();
       }
+      // if(result){
+      //   this.transactionService.addTransaction(result).subscribe(() => {
+      //     this.getAllTransactions();
+      //   });
+      // }
     });
   }
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, NgForm, Validators } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -42,7 +42,6 @@ export class AccountInputComponent implements OnInit {
               private dialogRef: MatDialogRef<AccountInputComponent>) { }
 
   ngOnInit() {
-    // this.newAccount = this.data;
     this.getDefaultCurrency();
   }
 
@@ -66,30 +65,21 @@ export class AccountInputComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if(this.addAccountForm.valid && (this.account.balance > 1)){
+    if(this.addAccountForm.valid){
       const selectedCurrency = this.currencies.find(currency => this.account.currency === currency);
-      // const accountData = {
-      //   ...this.account,
-        
-      // }
-      this.account.currency != selectedCurrency;
+      this.account.currency = selectedCurrency as string;
 
-      this.accountService.addAccount(this.account).subscribe(() => {
-        this.newDataEvent.emit(this.addAccountForm.value);  // account se kreira samo kad se klikne Create, a ne i kad kliknem Cancel
-        this.dialogRef.close();
+      this.accountService.addAccount(this.account).subscribe((newAccount: Account) => {
+        this.newDataEvent.emit(newAccount);  // account se kreira samo kad se klikne Create, a ne i kad kliknem Cancel
+        console.log(this.addAccountForm.value);
+        this.dialogRef.close(newAccount);
       });
-      // this.accountService.addAccount(this.addAccountForm.value).subscribe(data => {
-      // this.newDataEvent.emit(data);
-      // this.dialogRef.close();
+      
     }
-    // this.getAccounts();
   }
   
   onCancel(){
     this.dialogRef.close(null); // zatvori bez da se ista emituje
   }
 
-  // addAccountSubmit(): void {
-  //   this.accountService.addAccount().subscribe(data => this.newDataEvent.emit(data));
-  // }
 }

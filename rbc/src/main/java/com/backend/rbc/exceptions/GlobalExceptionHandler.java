@@ -65,4 +65,11 @@ public class GlobalExceptionHandler {
         return new ErrorResponse(exception.getMessage());
     }
 
+    @ExceptionHandler(SettingsNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ErrorResponse handleSettingsNotFound(SettingsNotFoundException exception){
+        return new ErrorResponse(exception.getMessage());
+    }
+
 }

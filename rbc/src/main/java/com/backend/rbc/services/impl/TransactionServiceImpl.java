@@ -31,8 +31,8 @@ public class TransactionServiceImpl implements TransactionService {
     private AccountRepository accountRepository;
     @Autowired
     private CurrencySettingsServiceImpl currencySettingsServiceImpl;
-    @Autowired
-    private RestTemplate restTemplate;
+//    @Autowired
+//    private RestTemplate restTemplate;
 
     private TransactionMapper transactionMapper;
 
@@ -143,6 +143,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         String apiUrl = String.format("https://latest.currency-api.pages.dev/v1/currencies/%s.json", transactionCurrency.toLowerCase());
         System.out.println("\t\t api: " + apiUrl);
+        RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<CurrencyResponse> response = restTemplate.getForEntity(apiUrl, CurrencyResponse.class);
         System.out.println("\t\t response: " + response);
 

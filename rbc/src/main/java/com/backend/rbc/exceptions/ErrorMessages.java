@@ -8,7 +8,8 @@ public enum ErrorMessages {
     NO_DATA_TO_DELETE("There's no Data left to Delete."),
     INVALID_CREDENTIALS("Invalid Credentials! Please, check Your Inputs."),
     UNABLE_TO_FETCH_CURRENCIES("Unable to fetch conversion rate!"),
-    DEFAULT_CURRENCY_NOT_SET("Default currency not set in settings");
+    DEFAULT_CURRENCY_NOT_SET("Default currency not set in settings"),
+    SETTINGS_NOT_FOUND("Settings Not Found.");
 
     private final String message;
 

@@ -75,10 +75,7 @@ export class TransactionInputComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.addTransactionForm.valid && (this.transaction.amount > 1)) {
-      // this.newDataEvent.emit(this.addTransactionForm.value);
-      // this.dialogRef.close();
-
+    if (this.addTransactionForm.valid) {
       const selectedAccount = this.accounts.find(account => account.id === +this.transaction.account);
 
       const transactionData = {
@@ -86,9 +83,9 @@ export class TransactionInputComponent implements OnInit {
         account: selectedAccount
       };
 
-      this.transactionService.addTransaction(transactionData).subscribe(() => {
-        this.newDataEvent.emit(this.addTransactionForm.value); // Emit event to notify parent component
-        this.dialogRef.close();
+      this.transactionService.addTransaction(transactionData).subscribe((newTransaction: Transaction) => {
+        this.newDataEvent.emit(newTransaction); // Emit event to notify parent component
+        this.dialogRef.close(newTransaction);
       });
     }
     // this.getTransactions();

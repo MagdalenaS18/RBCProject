@@ -4,7 +4,19 @@
     <div mat-dialog-content>
       <mat-form-field class="account-full-width">
         <mat-label>Name</mat-label>
-        <input matInput name="name" [(ngModel)]="account.name" required>
+        <input 
+          matInput 
+          name="name" 
+          [(ngModel)]="account.name" 
+          required
+          pattern="^[a-zA-Z0-9]+$"
+          minlength="5"
+          #name="ngModel">
+        <mat-error *ngIf="name.invalid && name.touched">
+          <span *ngIf="name.errors?.['required']">Name is required.</span>
+          <span *ngIf="name.errors?.['pattern']">Name can only contain letters and numbers.</span>
+          <span *ngIf="name.errors?.['minlength']">Name must be at least 5 characters long.</span>
+        </mat-error>
       </mat-form-field>
 
       <!-- <mat-form-field class="account-full-width">
@@ -14,28 +26,49 @@
 
       <mat-form-field class="account-full-width">
         <mat-label>Currency</mat-label>
-        <mat-select name="currency" [(ngModel)]="account.currency" required>
+        <mat-select 
+          name="currency" 
+          [(ngModel)]="account.currency" 
+          required
+          #currency="ngModel">
           <mat-option *ngFor="let currency of currencies" [value]="currency">
             {{ currency | uppercase }}
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="currency.invalid && currency.touched">
+          Currency is required.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field class="account-full-width">
         <mat-label>Balance</mat-label>
-        <input matInput type="number" name="balance" [(ngModel)]="account.balance" required>
+        <input 
+          matInput 
+          type="number" 
+          name="balance" 
+          [(ngModel)]="account.balance" 
+          required
+          min="1"
+          #balance="ngModel">
+          <mat-error *ngIf="balance.invalid && balance.touched">
+            <span *ngIf="balance.errors?.['required']">Balance is required.</span>
+            <span *ngIf="balance.errors?.['min']">Balance must be a positive number.</span>
+          </mat-error>
       </mat-form-field>
     </div>
     <div mat-dialog-actions class="form-buttons">
-      <button mat-raised-button
-              type="button"
-              (click)="onCancel()"
-              style="background-color: rgb(197, 68, 68); color: whitesmoke;">
-              Cancel
+      <button 
+        mat-raised-button
+        type="button"
+        (click)="onCancel()"
+        style="background-color: rgb(197, 68, 68); color: whitesmoke;">
+        Cancel
       </button>
-      <button mat-raised-button
-              type="submit"
-              style="background-color: rgb(115, 198, 124);  color: whitesmoke;">Create Account</button>
+      <button 
+        mat-raised-button
+        [disabled]="addAccountForm.invalid"
+        type="submit"
+        style="background-color: rgb(115, 198, 124);  color: whitesmoke;">Create Account</button>
     </div>
   </div>
 </form>

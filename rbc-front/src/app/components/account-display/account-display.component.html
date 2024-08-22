@@ -17,11 +17,11 @@
     <mat-card>
       <mat-card-title>
         <p class="account">{{ account.name }}</p>
-        <p class="account">{{ account.balance }} {{ account.currency | uppercase }}</p>
+        <p class="account">{{ convertToDefaultCurrency(account.balance, account.currency) | number:'1.2-2' }} {{ defaultCurrency | uppercase }}</p>
       </mat-card-title>
       <mat-card-content>
         <p></p>
-        <p class="balance-currency">{{ convertToDefaultCurrency(account.balance, account.currency) | number:'1.2-2' }}{{ defaultCurrency | uppercase }}</p>
+        <p class="balance-currency" *ngIf="account.currency!==defaultCurrency"> {{ account.balance | number:'1.2-2' }} {{ account.currency | uppercase }}</p>
       </mat-card-content>
       <!-- <mat-divider></mat-divider> -->
     </mat-card>
