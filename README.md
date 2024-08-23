@@ -98,7 +98,7 @@ command to create the database.
 
 After creating the database, run the backend application.
 
-In MySQL, run the commands from `accountmysql.txt` and then run the commands from `transactionmysql.txt`.
+In MySQL, run the commands from `accountmysql.txt` and then run the commands from `transactionmysql.txt` and `settingsmysqlscripta.txt`.
 
 
 **Frontend Setup**
