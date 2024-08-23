@@ -82,7 +82,6 @@ The application provides features such as account management, transactions, and 
     spring.jpa.show-sql=true
     server.error.include-message=always
 
-
 **Running the Application**
 
   - In the Project tool window, locate the main class (YourMainApplication.java).
@@ -90,6 +89,9 @@ The application provides features such as account management, transactions, and 
   - The application will start, and you can monitor the logs in the Run/Debug window.
 
 The backend runs on 'http://localhost:8080'.
+
+After running the backend application, run the code from `accountmysql.txt` in MySQL and then run the code from `transactionmysql.txt`.
+
 
 **Frontend Setup**
 
