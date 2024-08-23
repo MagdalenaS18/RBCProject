@@ -1,0 +1,4 @@
+use your_database_name;
+
+insert into settings (id, default_currency)
+values (1, 'eur');
