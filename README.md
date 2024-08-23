@@ -36,10 +36,12 @@ The application provides features such as account management, transactions, and 
 
 **Getting Started**
 
-  Prerequisites
-  Java 17
-  Node.js (v18) & npm
-  Angular CLI (v17)
+  Prerequisites:
+  JDK 17, 
+  Maven, 
+  IntelliJ IDEA Community Edition, 
+  Node.js (v18) & npm, 
+  Angular CLI (v17), 
   MySQL or any other relational database (for production)
 
 
@@ -50,7 +52,24 @@ The application provides features such as account management, transactions, and 
   git clone https://github.com/MagdalenaS18/RBCProject.git
 
   cd RBCProject/rbc
-  
+
+**Import the Project into IntelliJ IDEA**
+
+  - Open IntelliJ IDEA
+  - Click on `File > Open....`
+  - Navigate to the cloned repository and select the project's root folder (where the pom.xml file is located).
+
+**Configure the Project SDK**
+
+  - Go to File > Project Structure.
+  - Under Project Settings > Project, ensure the Project SDK is set (or the version of Java installed).
+  - If the SDK is not listed, click New > JDK, and navigate to the installation path of your JDK.
+
+**Build the Project**
+
+  - Open the Maven tool window on the right side of IntelliJ IDEA.
+  - Under the Lifecycle section, double-click on clean and then install.
+  - Maven will download all dependencies and build the project.
 
 **Configure the database:**
 
@@ -58,33 +77,31 @@ The application provides features such as account management, transactions, and 
     spring.datasource.url=jdbc:mysql://localhost:3306/your_database_name
     spring.datasource.username=your_username
     spring.datasource.password=your_password
+    spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
     spring.jpa.hibernate.ddl-auto=update
+    spring.jpa.show-sql=true
+    server.error.include-message=always
 
 
-**Build the project:**
-  
-    mvn clean install
+**Running the Application**
+
+  - In the Project tool window, locate the main class (YourMainApplication.java).
+  - Right-click on the main class and select Run 'YourMainApplication'.
+  - The application will start, and you can monitor the logs in the Run/Debug window.
+
 The backend runs on 'http://localhost:8080'.
-
 
 **Frontend Setup**
 
 Install dependencies:
 
     npm install
-The frontend runs on 'http://localhost:4200'.
-
-
-**Run the project**
-
-Run the backend:
-  
-    mvn spring-boot:run
 
 Run the frontend:
     
     ng serve
 
+The frontend runs on 'http://localhost:4200'.
 
 **API Endpoints**
 
