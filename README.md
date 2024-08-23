@@ -90,7 +90,15 @@ The application provides features such as account management, transactions, and 
 
 The backend runs on 'http://localhost:8080'.
 
-After running the backend application, run the code from `accountmysql.txt` in MySQL and then run the code from `transactionmysql.txt`.
+In MySQL Workbench run the
+
+    create database your_database_name;
+
+command to create the database.
+
+After creating the database, run the backend application.
+
+In MySQL, run the commands from `accountmysql.txt` and then run the commands from `transactionmysql.txt`.
 
 
 **Frontend Setup**
