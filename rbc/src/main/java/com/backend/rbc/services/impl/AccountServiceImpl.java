@@ -48,11 +48,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDto createAccount(AccountDto accountDto) {
-        // need to convert accountDto to account (it needs to be JPA entity) to save in the database
-        // then I also need to convert account to accountDto to send it again to the client
-//        Account account = accountMapper.mapToAccount(accountDto);
-//        Account savedAccount = accountRepository.save(account);
-
         Account account = new Account();
         if(accountDto.getName().isBlank() || accountDto.getCurrency().isBlank()){
             throw new InvalidCredentialsException();
@@ -61,14 +56,12 @@ public class AccountServiceImpl implements AccountService {
             account.setName(accountDto.getName());
             account.setCurrency(accountDto.getCurrency().toLowerCase());
         }
-
         if(accountDto.getBalance() < 1){
             throw new AmountCanNotBeNegativeException();
         }
         else {
             account.setBalance(accountDto.getBalance());
         }
-
         Account newAccount = accountRepository.save(account);
 
         return accountMapper.mapToDTO(newAccount);
@@ -104,7 +97,6 @@ public class AccountServiceImpl implements AccountService {
         if(accountRepository.findAll().isEmpty()){
             throw new NoDataToDeleteException();
         }
-        // dodati EXC za nema vise account-a za brisati
         accountRepository.deleteAll();
     }
 

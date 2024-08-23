@@ -48,16 +48,4 @@ public class TransactionController {
         return ResponseEntity.ok().build();
     }
 
-
-//    @GetMapping("/account/{accountId}")
-//    public ResponseEntity<List<TransactionDto>> getTransactionsForAccount(@RequestBody AccountDto accountDto, @PathVariable Long accountId){
-//        return ResponseEntity.ok(transactionService.getTransactionsByAccountId(accountDto));
-//    }
-
-
-
-//    @GetMapping("/account/{accountId}")
-//    public List<TransactionDto> getTransactionsByAccountId(@PathVariable Long accountId) {
-//        return transactionService.getTransactionsByAccountId(accountId);
-//    }
 }

@@ -35,10 +35,7 @@ public class Transaction {
     @Column(name = "amount")
     private Float amount;
 
-//    @Column(name = "convertedAmount")
-//    private Float convertedAmount;
     @Column(name = "currency")
     private String currency;
 
-    //List<Transaction> allTransactions;
 }

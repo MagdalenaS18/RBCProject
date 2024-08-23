@@ -33,7 +33,6 @@ public class AccountController {
     @PostMapping
     public ResponseEntity<AccountDto> createAccount(@RequestBody AccountDto accountDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(accountService.createAccount(accountDto));
-        // .status(HttpStatus.CREATED).body(accService.createAcc(accDto));
     }
 
     @PatchMapping

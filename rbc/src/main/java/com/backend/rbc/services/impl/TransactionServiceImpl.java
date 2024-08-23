@@ -31,9 +31,6 @@ public class TransactionServiceImpl implements TransactionService {
     private AccountRepository accountRepository;
     @Autowired
     private CurrencySettingsServiceImpl currencySettingsServiceImpl;
-//    @Autowired
-//    private RestTemplate restTemplate;
-
     private TransactionMapper transactionMapper;
 
     @Override
@@ -89,8 +86,7 @@ public class TransactionServiceImpl implements TransactionService {
         } else if (transaction.getType() == Type.PROFIT){
             account.setBalance(account.getBalance() + convertedAmount);
         }
-//        float convertedAmount = currencySettingsServiceImpl.convertToDefaultCurrency(transactionDto.getAmount(), transactionDto.getCurrency());
-        //transaction.setConvertedAmount(convertedAmount);
+
         transaction.setCurrency(transactionDto.getCurrency().toLowerCase());
 
         accountRepository.save(account);
@@ -130,10 +126,6 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     public float convertToDefaultCurrency(float amount, String transactionCurrency, Long accountId) {
-//        String defaultCurrency = getDefaultCurrency().toUpperCase();
-//        Settings settings = settingsRepository.findAll().stream().findFirst().orElseThrow(() ->
-//                new RuntimeException("Default currency not set in settings"));
-//        String defaultCurrency = settings.getDefaultCurrency().toUpperCase();
         Account account = accountRepository.findById(accountId).orElseThrow(() ->
                 new AccountNotFoundException());
 

@@ -12,16 +12,5 @@ import java.util.List;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-    // Custom query to find transactions by accountId
-//    @Query("SELECT t FROM Transaction t WHERE t.account.id = :accountId")
-
-
-//    @Query("SELECT t FROM transaction t WHERE t.account_id = :accountId")
-//    List<Transaction> findByAccount(@Param("accountsTransaction") Long accountsTransaction);
-
     List<Transaction> findByAccountId(Long accountId);
-//    boolean findAccountId(Long accountId);
-
-//    @Query("SELECT t.account_id FROM transaction t")
-//    Long findAccountId(@Param("accountId") Long accountId);
 }

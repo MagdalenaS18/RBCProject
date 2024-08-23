@@ -10,7 +10,6 @@ import java.util.List;
 @Service
 public interface TransactionService {
     List<TransactionDto> getTransactions();
-//    List<TransactionDto> getTransactionsByAccountId(Long id);
     List<TransactionDto> getTransactionsForAccount(Long accountId);
     TransactionDto createTransaction(TransactionDto transactionDto);
     TransactionDto updateTransaction(TransactionDto transactionDto);

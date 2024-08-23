@@ -8,6 +8,9 @@ class RbcApplicationTests {
 
 	@Test
 	void contextLoads() {
+		// sanity check
 	}
+
+
 
 }

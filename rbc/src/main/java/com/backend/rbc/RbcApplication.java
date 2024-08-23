@@ -14,9 +14,4 @@ public class RbcApplication {
 		SpringApplication.run(RbcApplication.class, args);
 	}
 
-//	@Bean
-//	public RestTemplate restTemplate(){
-//		return new RestTemplate();
-//	}
-
 }

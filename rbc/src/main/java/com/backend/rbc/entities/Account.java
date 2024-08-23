@@ -36,13 +36,4 @@ public class Account {
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Transaction> transactions;
 
-//    public Account(Long id, String name, String currency, float balance, List<Transaction> transactions) {
-//        this.id = id;
-//        this.name = name;
-//        this.currency = currency;
-//        this.balance = balance;
-//        this.transactions = this.getTransactions();
-//    }
-
-    //private List<Transaction> transactions;
 }
