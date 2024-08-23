@@ -1,0 +1,10 @@
+use your_database_name;
+
+insert into transaction (amount, description, type, account_id, currency)
+values (200.00, 'Transfer to friends account', 'EXPENSE', 1, 'EUR'),
+(150.75, 'Groceries', 'EXPENSE', 1, 'EUR'),
+(500.00, 'Deposit some cash', 'PROFIT', 1, 'EUR'),
+(45.50, 'Udemy course payment', 'EXPENSE', 2, 'USD'),
+(300.00, 'Deposit money', 'PROFIT', 2, 'USD'),
+(60.00, 'Electricity bill payment', 'EXPENSE', 3, 'EUR'),
+(150.00, 'Add money to account', 'PROFIT', 3, 'EUR');

@@ -1,0 +1,7 @@
+use your_database_name;
+
+insert into account (balance, currency, name)
+values (1051.25, 'EUR', 'John Doe'),
+(620.7, 'USD', 'Jane Smith'),
+(230.75, 'EUR', 'Michael Brown'),
+(550.10, 'EUR', 'Emily Johnson');
